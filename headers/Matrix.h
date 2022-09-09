@@ -10,6 +10,10 @@
 
 using double80_t = long double;
 
+struct OperableSet {
+    uint64_t modifiableIndex;
+    uint64_t operableIndex;
+};
 
 class Matrix {
 public:
@@ -29,22 +33,22 @@ public:
 
     [[nodiscard]] uint64_t GetColumnsNumber() const;
 
-    void SumRows(const uint64_t &rowToSumIndex, const uint64_t &rowToChangeIndex);
+    void SumRows(const OperableSet &sumSet);
 
-    void SubtractRows(const uint64_t &rowToSubtractIndex, const uint64_t &rowToChangeIndex);
+    void SubtractRows(const OperableSet &subtractionSet);
 
-    void MultiplyRowBy(const uint64_t &targetRowIndex, const double80_t &multiplier);
+    void MultiplyRow(const uint64_t &targetRowIndex, const double80_t &multiplier);
 
-    void SubtractMultipliedRow(const uint64_t &rowToSubtractIndex, const uint64_t &rowToChangeIndex,
-                               const double80_t &multiplier);
+    void SubtractMultipliedRow(const OperableSet &subtractionSet, const double80_t &multiplier);
 
-    [[nodiscard]] uint64_t GetMaxColumnElementIndex(const uint64_t &columnIndex);
+    [[nodiscard]] uint64_t GetMaxColumnElementIndex(const uint64_t &columnIndex, const uint64_t & fromRow = 0);
 
-    [[nodiscard]] uint64_t GetMaxRowElementIndex(const uint64_t &rowIndex);
-
-    void RandomInit(const double80_t & minRandom, const double80_t & maxRandom);
+    void RandomInit(const double80_t &minRandom, const double80_t &maxRandom);
 
     void Print();
+
+private:
+    void CheckOperableSet(const OperableSet & operableSet) const;
 
 private:
     std::vector<std::vector<double80_t>> _data;

@@ -9,14 +9,14 @@ Matrix::Matrix(const uint64_t &rows, const uint64_t &columns) : _rows(rows), _co
 }
 
 std::vector<double80_t> const &Matrix::operator[](const uint64_t &index) const {
-    if (index >= _rows) {
+    if (index >= this->GetRowsNumber()) {
         throw (std::out_of_range("Matrix out of range"));
     }
     return this->_data[index];
 }
 
 std::vector<double80_t> &Matrix::operator[](const uint64_t &index) {
-    if (index >= this->_rows) {
+    if (index >= this->GetRowsNumber()) {
         throw (std::out_of_range("Matrix out of range"));
     }
     return this->_data[index];
@@ -30,37 +30,40 @@ uint64_t Matrix::GetColumnsNumber() const {
     return this->_columns;
 }
 
-void Matrix::SumRows(const uint64_t &rowToSumIndex, const uint64_t &rowToChangeIndex) {
+void Matrix::SumRows(const OperableSet &sumSet) {
+    this->CheckOperableSet(sumSet);
+
     for (uint64_t i = 0; i < this->GetColumnsNumber(); i++) {
-        this->_data[rowToChangeIndex][i] += this->_data[rowToSumIndex][i];
+        this->_data[sumSet.modifiableIndex][i] += this->_data[sumSet.operableIndex][i];
     }
 }
 
-void Matrix::SubtractRows(const uint64_t &rowToSubtractIndex, const uint64_t &rowToChangeIndex) {
+void Matrix::SubtractRows(const OperableSet &subtractionSet) {
+    this->CheckOperableSet(subtractionSet);
+
     for (uint64_t i = 0; i < this->GetColumnsNumber(); i++) {
-        this->_data[rowToChangeIndex][i] -= this->_data[rowToSubtractIndex][i];
+        this->_data[subtractionSet.modifiableIndex][i] -= this->_data[subtractionSet.operableIndex][i];
     }
 }
 
-void Matrix::MultiplyRowBy(const uint64_t &targetRowIndex, const double80_t &multiplier) {
+void Matrix::MultiplyRow(const uint64_t &targetRowIndex, const double80_t &multiplier) {
     for (uint64_t i = 0; i < this->GetColumnsNumber(); i++) {
         this->_data[targetRowIndex][i] *= multiplier;
     }
 }
 
-void Matrix::SubtractMultipliedRow(const uint64_t &rowToSubtractIndex, const uint64_t &rowToChangeIndex,
-                                   const double80_t &multiplier) {
+void Matrix::SubtractMultipliedRow(const OperableSet &subtractionSet, const double80_t &multiplier) {
     for (uint64_t i = 0; i < this->GetColumnsNumber(); i++) {
-        this->_data[rowToChangeIndex][i] -= this->_data[rowToSubtractIndex][i] * multiplier;
+        this->_data[subtractionSet.modifiableIndex][i] -= this->_data[subtractionSet.operableIndex][i] * multiplier;
     }
 }
 
-uint64_t Matrix::GetMaxColumnElementIndex(const uint64_t &columnIndex) {
+uint64_t Matrix::GetMaxColumnElementIndex(const uint64_t &columnIndex, const uint64_t & fromRow) {
     uint64_t resultIndex = 0;
     double80_t resultMax = 0.0;
 
-    for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
-        const double80_t currentComparableElement = std::fabs(this->_data[i][columnIndex]);
+    for (uint64_t i = fromRow; i < this->GetRowsNumber(); i++) {
+        const double80_t currentComparableElement = std::abs(this->_data[i][columnIndex]);
 
         if (resultMax > currentComparableElement) {
             continue;
@@ -73,16 +76,7 @@ uint64_t Matrix::GetMaxColumnElementIndex(const uint64_t &columnIndex) {
     return resultIndex;
 }
 
-uint64_t Matrix::GetMaxRowElementIndex(const uint64_t &rowIndex) {
-    const auto maxElementIterator = std::max_element(this->_data[rowIndex].begin(), this->_data[rowIndex].end(),
-                                                     [](double80_t a, double80_t b) {
-                                                         return std::fabs(a) < std::fabs(b);
-                                                     });
-
-    return std::distance(this->_data[rowIndex].begin(), maxElementIterator);
-}
-
-void Matrix::RandomInit(const double80_t & minRandom, const double80_t & maxRandom) {
+void Matrix::RandomInit(const double80_t &minRandom, const double80_t &maxRandom) {
     std::random_device randomDevice;
     std::mt19937 generate(randomDevice());
     std::uniform_real_distribution<double80_t> distribution(minRandom, maxRandom);
@@ -110,4 +104,10 @@ void Matrix::Print() {
     }
 
     std::cout << std::endl;
+}
+
+void Matrix::CheckOperableSet(const OperableSet &operableSet) const {
+    if (operableSet.operableIndex >= this->GetRowsNumber() || operableSet.modifiableIndex >= this->GetRowsNumber()) {
+        throw (std::out_of_range("Given index set is out of Matrix range"));
+    }
 }
