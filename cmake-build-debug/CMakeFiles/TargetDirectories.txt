@@ -1,0 +1,3 @@
+S:/labs/computational-methods/lab-1/cmake-build-debug/CMakeFiles/lab_1.dir
+S:/labs/computational-methods/lab-1/cmake-build-debug/CMakeFiles/edit_cache.dir
+S:/labs/computational-methods/lab-1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
