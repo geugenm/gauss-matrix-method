@@ -111,3 +111,15 @@ void Matrix::CheckOperableSet(const OperableSet &operableSet) const {
         throw (std::out_of_range("Given index set is out of Matrix range"));
     }
 }
+
+Matrix &Matrix::operator*(const Matrix & multiplier) {
+    Matrix result(this->GetRowsNumber(), multiplier.GetColumnsNumber());
+
+    for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
+        for (uint64_t j = 0; j < multiplier.GetColumnsNumber(); j++) {
+            for(uint64_t k = 0; k < multiplier.GetRowsNumber(); k++) {
+                result[i][j] += this->operator[](i)[k] * multiplier[k][j];
+            }
+        }
+    }
+}

@@ -23,6 +23,8 @@ public:
 
     Matrix &operator=(const Matrix &source) = default;
 
+    Matrix & operator*(const Matrix & multiplier);
+
     ~Matrix() = default;
 
     [[nodiscard]] std::vector<double80_t> const &operator[](const uint64_t &index) const;
