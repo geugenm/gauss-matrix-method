@@ -4,4 +4,4 @@ project(lab_1)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(lab_1
-        cpp/main.cpp)
+        cpp/main.cpp headers/Matrix.h headers/Matrix.cpp)
