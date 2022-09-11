@@ -1,4 +1,4 @@
-#include "Matrix.h"
+#include "../headers/Matrix.h"
 
 Matrix::Matrix(const uint64_t &rows, const uint64_t &columns) : _rows(rows), _columns(columns) {
     this->_data.resize(rows);

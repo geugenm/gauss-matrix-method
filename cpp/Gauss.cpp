@@ -1,4 +1,4 @@
-#include "Gauss.h"
+#include "../headers/Gauss.h"
 
 GaussMatrix::GaussMatrix() {
     this->_matrix = std::make_unique<Matrix>(5, 6);

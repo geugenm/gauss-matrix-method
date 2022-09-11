@@ -124,13 +124,13 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "headers/Matrix.cpp",
+			"path" : "cpp/Matrix.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "headers/Gauss.cpp",
+			"path" : "cpp/Gauss.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
