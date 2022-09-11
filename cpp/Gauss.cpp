@@ -1,22 +1,14 @@
 #include "../headers/Gauss.h"
 
-GaussMatrix::GaussMatrix() {
-    this->_matrix = std::make_unique<Matrix>(5, 6);
-
-    this->_matrix->RandomInit(-100.0, 100.0);
-
-    this->_roots.reserve(this->_matrix->GetRowsNumber());
-}
-
 GaussMatrix::GaussMatrix(const Matrix &matrix) {
     this->_matrix = std::make_unique<Matrix>(matrix);
+
+    this->_roots.resize(this->_matrix->GetRowsNumber());
 }
 
-void GaussMatrix::PlaceMaxElementOnRow(const uint64_t &columnIndex, const uint64_t &comparedTo, const uint64_t & fromRow) {
-    const uint64_t maxElementIndex = this->_matrix->GetMaxColumnElementIndex(columnIndex, fromRow);
-    if (maxElementIndex == comparedTo) {
-        return;
-    }
+void
+GaussMatrix::PlaceMaxElementOnRow(const uint64_t &columnIndex, const uint64_t &comparedTo) {
+    const uint64_t maxElementIndex = this->_matrix->GetMaxColumnElementIndex(columnIndex, columnIndex);
     std::swap(this->_matrix->operator[](maxElementIndex), this->_matrix->operator[](comparedTo));
 }
 
@@ -58,9 +50,9 @@ void GaussMatrix::StraightforwardStroke() {
 
         std::cout << "i is:" << i << std::endl;
         this->_matrix->Print();
-        this->PlaceMaxElementOnRow(i, i, i);
+        this->PlaceMaxElementOnRow(i, i);
         this->_matrix->Print();
-        std::cout << "==========================="<< std::endl;
+        std::cout << "===========================" << std::endl;
         this->MakeDiagonalElementOne(i);
     }
 }
@@ -88,26 +80,38 @@ void GaussMatrix::PrintRoots() const {
     }
 }
 
-void GaussMatrix::InconsistencyVector() const {
-    std::vector<double80_t> inconsistencyVector;
-    inconsistencyVector.reserve(this->_matrix->GetRowsNumber());
-
-    const uint64_t precision = 32;
-    const uint64_t width = 7;
-
-    std::cout << std::setprecision(precision);
-
-    for (uint64_t i = 0; i < this->_matrix->GetRowsNumber(); i++) {
-        const double80_t equationColumnValue = this->_matrix->operator[](i)[this->_matrix->GetColumnsNumber() - 1];
-        double80_t sum = 0.0;
-        for (uint64_t j = 0; j < this->_matrix->GetColumnsNumber() - 1; j++) {
-            sum += this->_roots[j] * this->_matrix->operator[](i)[j];
-        }
-        inconsistencyVector[i] = sum - equationColumnValue;
-        std::cout << "Element " << i << ": " << std::setw(width) << inconsistencyVector[i] << std::endl;
-    }
+GaussMatrix::GaussMatrix(const GaussMatrix &source) : _roots(source._roots) {
+    this->_matrix = std::make_unique<Matrix>(*source._matrix);
 }
 
-void GaussMatrix::FindNorm(const std::vector<double80_t> &inconsistency) {
-    std::cout << "Max element: " << *std::max_element(inconsistency.begin(), inconsistency.end()) << std::endl;
+std::vector<double80_t> &GaussMatrix::operator[](const uint64_t &index) {
+    if (index >= this->GetRowsNumber()) {
+        throw (std::out_of_range("Gauss root index out of range"));
+    }
+    return this->_matrix->operator[](index);
+}
+
+std::vector<double80_t> const &GaussMatrix::operator[](const uint64_t &index) const {
+    if (index >= this->GetRowsNumber()) {
+        throw (std::out_of_range("Gauss root index out of range"));
+    }
+    return this->_matrix->operator[](index);
+}
+
+double80_t GaussMatrix::GetRoot(const uint64_t &index) const {
+    if (this->_roots.empty()) {
+        throw (std::out_of_range("Gauss root is empty"));
+    }
+    if (index >= this->GetRowsNumber()) {
+        throw (std::out_of_range("Gauss root index out of range"));
+    }
+    return this->_roots[index];
+}
+
+uint64_t GaussMatrix::GetRowsNumber() const {
+    return this->_matrix->GetRowsNumber();
+}
+
+uint64_t GaussMatrix::GetColumnsNumber() const {
+    return this->_matrix->GetColumnsNumber();
 }

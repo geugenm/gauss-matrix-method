@@ -5,13 +5,21 @@
 
 class GaussMatrix {
 public:
-    GaussMatrix();
-
     explicit GaussMatrix(const Matrix & matrix);
 
-    void PlaceMaxElementOnRow(const uint64_t &columnIndex, const uint64_t &comparedTo, const uint64_t & fromRow);
+    GaussMatrix(const GaussMatrix & source);
 
-    void InconsistencyVector() const;
+    [[nodiscard]] std::vector<double80_t> & operator[] (const uint64_t & index);
+
+    [[nodiscard]] std::vector<double80_t> const & operator[] (const uint64_t & index) const;
+
+    [[nodiscard]] double80_t GetRoot(const uint64_t & index) const;
+
+    [[nodiscard]] uint64_t GetRowsNumber() const;
+
+    [[nodiscard]] uint64_t GetColumnsNumber() const;
+
+    void PlaceMaxElementOnRow(const uint64_t &columnIndex, const uint64_t &comparedTo);
 
     void NullifyLowerElementsFrom(const uint64_t &currentRow);
 
@@ -26,8 +34,6 @@ public:
     void Print() const;
 
     void PrintRoots() const;
-
-    static void FindNorm(const std::vector<double80_t> & inconsistency) ;
 
     ~GaussMatrix() = default;
 

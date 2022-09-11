@@ -49,11 +49,11 @@ cmake_ninja_workdir = S$:/labs/computational-methods/lab-1/cmake-build-debug/
 
 build cmake_object_order_depends_target_lab_1: phony || CMakeFiles/lab_1.dir
 
-build CMakeFiles/lab_1.dir/cpp/main.cpp.obj: CXX_COMPILER__lab_1_Debug S$:/labs/computational-methods/lab-1/cpp/main.cpp || cmake_object_order_depends_target_lab_1
-  DEP_FILE = CMakeFiles\lab_1.dir\cpp\main.cpp.obj.d
+build CMakeFiles/lab_1.dir/main.cpp.obj: CXX_COMPILER__lab_1_Debug S$:/labs/computational-methods/lab-1/main.cpp || cmake_object_order_depends_target_lab_1
+  DEP_FILE = CMakeFiles\lab_1.dir\main.cpp.obj.d
   FLAGS = -g -std=gnu++14
   OBJECT_DIR = CMakeFiles\lab_1.dir
-  OBJECT_FILE_DIR = CMakeFiles\lab_1.dir\cpp
+  OBJECT_FILE_DIR = CMakeFiles\lab_1.dir
 
 build CMakeFiles/lab_1.dir/cpp/Matrix.cpp.obj: CXX_COMPILER__lab_1_Debug S$:/labs/computational-methods/lab-1/cpp/Matrix.cpp || cmake_object_order_depends_target_lab_1
   DEP_FILE = CMakeFiles\lab_1.dir\cpp\Matrix.cpp.obj.d
@@ -67,6 +67,12 @@ build CMakeFiles/lab_1.dir/cpp/Gauss.cpp.obj: CXX_COMPILER__lab_1_Debug S$:/labs
   OBJECT_DIR = CMakeFiles\lab_1.dir
   OBJECT_FILE_DIR = CMakeFiles\lab_1.dir\cpp
 
+build CMakeFiles/lab_1.dir/cpp/InconsistencyVector.cpp.obj: CXX_COMPILER__lab_1_Debug S$:/labs/computational-methods/lab-1/cpp/InconsistencyVector.cpp || cmake_object_order_depends_target_lab_1
+  DEP_FILE = CMakeFiles\lab_1.dir\cpp\InconsistencyVector.cpp.obj.d
+  FLAGS = -g -std=gnu++14
+  OBJECT_DIR = CMakeFiles\lab_1.dir
+  OBJECT_FILE_DIR = CMakeFiles\lab_1.dir\cpp
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target lab_1
@@ -75,7 +81,7 @@ build CMakeFiles/lab_1.dir/cpp/Gauss.cpp.obj: CXX_COMPILER__lab_1_Debug S$:/labs
 #############################################
 # Link the executable lab_1.exe
 
-build lab_1.exe: CXX_EXECUTABLE_LINKER__lab_1_Debug CMakeFiles/lab_1.dir/cpp/main.cpp.obj CMakeFiles/lab_1.dir/cpp/Matrix.cpp.obj CMakeFiles/lab_1.dir/cpp/Gauss.cpp.obj
+build lab_1.exe: CXX_EXECUTABLE_LINKER__lab_1_Debug CMakeFiles/lab_1.dir/main.cpp.obj CMakeFiles/lab_1.dir/cpp/Matrix.cpp.obj CMakeFiles/lab_1.dir/cpp/Gauss.cpp.obj CMakeFiles/lab_1.dir/cpp/InconsistencyVector.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\lab_1.dir

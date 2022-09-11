@@ -59,21 +59,14 @@ void Matrix::SubtractMultipliedRow(const OperableSet &subtractionSet, const doub
 }
 
 uint64_t Matrix::GetMaxColumnElementIndex(const uint64_t &columnIndex, const uint64_t & fromRow) {
-    uint64_t resultIndex = 0;
-    double80_t resultMax = 0.0;
-
+    std::vector<double80_t> columnVector{};
+    columnVector.resize(this->GetRowsNumber());
     for (uint64_t i = fromRow; i < this->GetRowsNumber(); i++) {
-        const double80_t currentComparableElement = std::abs(this->_data[i][columnIndex]);
-
-        if (resultMax > currentComparableElement) {
-            continue;
-        }
-
-        resultMax = currentComparableElement;
-        resultIndex = i;
+        columnVector[i] = this->operator[](i)[columnIndex];
     }
 
-    return resultIndex;
+    auto it = std::max_element(columnVector.begin() ,columnVector.end(), [](double80_t a, double80_t b) { return std::fabs(a) < std::fabs(b); });
+    return (std::distance(columnVector.begin(), it));
 }
 
 void Matrix::RandomInit(const double80_t &minRandom, const double80_t &maxRandom) {
