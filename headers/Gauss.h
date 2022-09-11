@@ -27,6 +27,8 @@ public:
 
     void PrintRoots() const;
 
+    static void FindNorm(const std::vector<double80_t> & inconsistency) ;
+
     ~GaussMatrix() = default;
 
 private:

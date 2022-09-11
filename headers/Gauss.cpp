@@ -107,3 +107,7 @@ void GaussMatrix::InconsistencyVector() const {
         std::cout << "Element " << i << ": " << std::setw(width) << inconsistencyVector[i] << std::endl;
     }
 }
+
+void GaussMatrix::FindNorm(const std::vector<double80_t> &inconsistency) {
+    std::cout << "Max element: " << *std::max_element(inconsistency.begin(), inconsistency.end()) << std::endl;
+}
