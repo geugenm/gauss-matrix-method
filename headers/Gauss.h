@@ -9,6 +9,8 @@ public:
 
     GaussMatrix(const GaussMatrix & source);
 
+    GaussMatrix & operator=(const GaussMatrix & source);
+
     [[nodiscard]] std::vector<double80_t> & operator[] (const uint64_t & index);
 
     [[nodiscard]] std::vector<double80_t> const & operator[] (const uint64_t & index) const;
@@ -34,6 +36,8 @@ public:
     void Print() const;
 
     void PrintRoots() const;
+
+    void SolveSystem();
 
     ~GaussMatrix() = default;
 

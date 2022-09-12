@@ -4,4 +4,4 @@ project(lab_1)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(lab_1
-        main.cpp headers/Matrix.h cpp/Matrix.cpp cpp/Gauss.cpp headers/Gauss.h cpp/InconsistencyVector.cpp headers/InconsistencyVector.h)
+        main.cpp headers/Matrix.h cpp/Matrix.cpp cpp/Gauss.cpp headers/Gauss.h cpp/InconsistencyVector.cpp headers/InconsistencyVector.h cpp/RelativeError.cpp headers/RelativeError.h)

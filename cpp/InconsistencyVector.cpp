@@ -34,14 +34,27 @@ void InconsistencyVector::Print() const {
                   << std::endl;
     }
 
-    std::cout << "Norm: " << this->_maxError;
+    std::cout << "Norm: " << this->_maxAbsoluteInconsistency;
 }
 
 void InconsistencyVector::FindNorm() {
-    this->_maxError = *std::max_element(this->_inconsistencyVector.begin(), this->_inconsistencyVector.end());
+    const double80_t maxInconsistencyValue = *std::max_element(this->_inconsistencyVector.begin(), this->_inconsistencyVector.end(),
+                                                               [](double80_t a, double80_t b) { return std::fabs(a) < std::fabs(b); });
+    this->_maxAbsoluteInconsistency = std::fabs(maxInconsistencyValue);
 }
 
 void InconsistencyVector::RecalculateInconsistency() {
     this->FindInconsistency();
     this->FindNorm();
+}
+
+InconsistencyVector::InconsistencyVector(const InconsistencyVector &source) {
+    this->_gaussMatrix = std::make_unique<GaussMatrix>(*source._gaussMatrix);
+    this->_inconsistencyVector.resize(source._gaussMatrix->GetRowsNumber());
+
+    this->RecalculateInconsistency();
+}
+
+double80_t InconsistencyVector::GetRoot(const uint64_t &rowIndex) const {
+    return this->_gaussMatrix->GetRoot(rowIndex);
 }

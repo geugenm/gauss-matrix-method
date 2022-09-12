@@ -5,15 +5,21 @@
 
 class InconsistencyVector {
 public:
+    InconsistencyVector(const InconsistencyVector & source);
+
     explicit InconsistencyVector(const GaussMatrix &gaussMatrix);
 
     void RecalculateInconsistency();
 
     void Print() const;
 
-private:
+    [[nodiscard]] double80_t GetRoot(const uint64_t & rowIndex) const;
+
     [[nodiscard]] double80_t FindRowSum(const uint64_t &targetedRow) const;
 
+    ~InconsistencyVector() = default;
+
+private:
     void FindNorm();
 
     void FindInconsistency();
@@ -23,5 +29,5 @@ private:
 
     std::vector<double80_t> _inconsistencyVector;
 
-    double80_t _maxError;
+    double80_t _maxAbsoluteInconsistency;
 };

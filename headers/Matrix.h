@@ -19,9 +19,9 @@ class Matrix {
 public:
     explicit Matrix(const uint64_t &rows, const uint64_t &columns);
 
-    Matrix(const Matrix &source) = default;
+    Matrix(const Matrix &source);
 
-    Matrix &operator=(const Matrix &source) = default;
+    Matrix &operator=(const Matrix &source);
 
     Matrix & operator*(const Matrix & multiplier);
 
@@ -43,7 +43,7 @@ public:
 
     void SubtractMultipliedRow(const OperableSet &subtractionSet, const double80_t &multiplier);
 
-    [[nodiscard]] uint64_t GetMaxColumnElementIndex(const uint64_t &columnIndex, const uint64_t & fromRow = 0);
+    [[nodiscard]] uint64_t GetMaxColumnElementIndex(const uint64_t &columnIndex, const uint64_t & fromRow = 0) const;
 
     void RandomInit(const double80_t &minRandom, const double80_t &maxRandom);
 

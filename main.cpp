@@ -2,6 +2,11 @@
 #include "headers/Matrix.h"
 #include "headers/Gauss.h"
 #include "headers/InconsistencyVector.h"
+#include "headers/RelativeError.h"
+
+// Todo:
+// 1. Write unit tests
+// 2. Refactor this trash code
 
 
 int main() {
@@ -10,13 +15,16 @@ int main() {
     GaussMatrix testMatrix(beta);
     testMatrix.Print();
 
-    testMatrix.StraightforwardStroke();
-    testMatrix.ReverseStroke();
+    testMatrix.SolveSystem();
     testMatrix.Print();
 
     testMatrix.PrintRoots();
     InconsistencyVector test(testMatrix);
     test.Print();
+
+    RelativeError testError(test, beta);
+    testError.SolveInconsistentEquation();
+    testError.Print();
 
     return 0;
 }

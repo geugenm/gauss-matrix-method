@@ -13,14 +13,14 @@ GaussMatrix::PlaceMaxElementOnRow(const uint64_t &columnIndex, const uint64_t &c
 }
 
 void GaussMatrix::NullifyLowerElementsFrom(const uint64_t &currentRow) {
-    OperableSet subtractionSet = {0, currentRow - 1};
     const uint64_t currentColumn = currentRow - 1;
+    OperableSet subtractionRowsSet = {0, currentRow - 1};
 
     for (uint64_t j = currentRow; j < this->_matrix->GetRowsNumber(); j++) {
         const double80_t multiplier = this->_matrix->operator[](j)[currentColumn];
 
-        subtractionSet.modifiableIndex = j;
-        this->_matrix->SubtractMultipliedRow(subtractionSet, multiplier);
+        subtractionRowsSet.modifiableIndex = j;
+        this->_matrix->SubtractMultipliedRow(subtractionRowsSet, multiplier);
     }
 }
 
@@ -41,18 +41,15 @@ void GaussMatrix::FindSolutionFor(const uint64_t &index) {
 }
 
 void GaussMatrix::StraightforwardStroke() {
-    const uint64_t rowsGeneral = this->_matrix->GetRowsNumber();
+    auto IsFirstRow = [](const uint64_t & targetedRow) {
+        return (targetedRow >= 1);
+    };
 
-    for (uint64_t i = 0; i < rowsGeneral; i++) {
-        if (i >= 1) {
+    for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
+        if (IsFirstRow(i)) {
             this->NullifyLowerElementsFrom(i);
         }
-
-        std::cout << "i is:" << i << std::endl;
-        this->_matrix->Print();
         this->PlaceMaxElementOnRow(i, i);
-        this->_matrix->Print();
-        std::cout << "===========================" << std::endl;
         this->MakeDiagonalElementOne(i);
     }
 }
@@ -114,4 +111,15 @@ uint64_t GaussMatrix::GetRowsNumber() const {
 
 uint64_t GaussMatrix::GetColumnsNumber() const {
     return this->_matrix->GetColumnsNumber();
+}
+
+GaussMatrix &GaussMatrix::operator=(const GaussMatrix &source) {
+    this->_matrix = std::make_unique<Matrix>(*source._matrix);
+    this->_roots = source._roots;
+    return *this;
+}
+
+void GaussMatrix::SolveSystem() {
+    this->StraightforwardStroke();
+    this->ReverseStroke();
 }

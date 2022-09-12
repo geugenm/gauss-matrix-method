@@ -58,7 +58,7 @@ void Matrix::SubtractMultipliedRow(const OperableSet &subtractionSet, const doub
     }
 }
 
-uint64_t Matrix::GetMaxColumnElementIndex(const uint64_t &columnIndex, const uint64_t & fromRow) {
+uint64_t Matrix::GetMaxColumnElementIndex(const uint64_t &columnIndex, const uint64_t & fromRow) const {
     std::vector<double80_t> columnVector{};
     columnVector.resize(this->GetRowsNumber());
     for (uint64_t i = fromRow; i < this->GetRowsNumber(); i++) {
@@ -106,13 +106,26 @@ void Matrix::CheckOperableSet(const OperableSet &operableSet) const {
 }
 
 Matrix &Matrix::operator*(const Matrix & multiplier) {
-    Matrix result(this->GetRowsNumber(), multiplier.GetColumnsNumber());
+    this->_data = multiplier._data;
+    this->_rows = multiplier.GetRowsNumber();
+    this->_columns = multiplier.GetColumnsNumber();
 
     for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
         for (uint64_t j = 0; j < multiplier.GetColumnsNumber(); j++) {
             for(uint64_t k = 0; k < multiplier.GetRowsNumber(); k++) {
-                result[i][j] += this->operator[](i)[k] * multiplier[k][j];
+                this->operator[](i)[j] += this->operator[](i)[k] * multiplier[k][j];
             }
         }
     }
+
+    return *this;
+}
+
+Matrix::Matrix(const Matrix &source) : _data(source._data), _rows(source.GetRowsNumber()), _columns(source.GetColumnsNumber()) {
+}
+
+Matrix &Matrix::operator=(const Matrix &source) {
+    this->_data = source._data;
+    this->_rows = source.GetRowsNumber();
+    this->_columns = source.GetColumnsNumber();
 }
