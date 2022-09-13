@@ -3,5 +3,8 @@ project(lab_1)
 
 set(CMAKE_CXX_STANDARD 14)
 
+## Task related files
 add_executable(lab_1
-        main.cpp headers/Matrix.h cpp/Matrix.cpp cpp/Gauss.cpp headers/Gauss.h cpp/InconsistencyVector.cpp headers/InconsistencyVector.h cpp/RelativeError.cpp headers/RelativeError.h)
+        main.cpp Headers/Matrix.h Sources/Matrix.cpp Sources/Gauss.cpp Headers/Gauss.h Sources/InconsistencyVector.cpp Headers/InconsistencyVector.h Sources/RelativeError.cpp Headers/RelativeError.h)
+
+add_subdirectory(GoogleUnitTests)
