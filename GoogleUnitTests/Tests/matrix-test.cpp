@@ -1,14 +1,19 @@
 #include "gtest/gtest.h"
+#include "../../Headers/Matrix.h"
+#include "../../Headers/Gauss.h"
+#include "../../Headers/InconsistencyVector.h"
+#include "../../Headers/RelativeError.h"
 
-class myTestFixture : public ::testing::Test {
+class MatrixTest : public ::testing::Test {
 public:
-    myTestFixture() {
+    MatrixTest() {
         // initialization;
         // can also be done in SetUp()
     }
 
     void SetUp() {
         // initialization or some code to run before each test
+        ASSERT_FALSE(false);
     }
 
     void TearDown() {
@@ -17,7 +22,7 @@ public:
         // but exceptions can be handled in this function only
     }
 
-    ~myTestFixture() {
+    ~MatrixTest() {
         //resources cleanup, no exceptions allowed
     }
 

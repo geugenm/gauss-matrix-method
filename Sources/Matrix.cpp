@@ -1,4 +1,4 @@
-#include "../headers/Matrix.h"
+#include "../Headers/Matrix.h"
 
 Matrix::Matrix(const uint64_t &rows, const uint64_t &columns) : _rows(rows), _columns(columns) {
     this->_data.resize(rows);
@@ -130,4 +130,17 @@ Matrix &Matrix::operator=(const Matrix &source) {
     this->_data = source._data;
     this->_rows = source.GetRowsNumber();
     this->_columns = source.GetColumnsNumber();
+    return *this;
+}
+
+Matrix::Matrix(const std::vector<std::vector<double80_t>> & source) {
+    if (source.empty()) {
+        throw std::invalid_argument("Source vector is empty");
+    }
+    this->_rows = source.size();
+    this->_columns = source[NULL].size();
+
+    this->_data = source;
+
+
 }

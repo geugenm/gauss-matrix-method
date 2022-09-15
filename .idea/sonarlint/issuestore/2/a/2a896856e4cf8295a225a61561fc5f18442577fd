@@ -1,9 +1,0 @@
-
-9cpp:S125"Remove the commented out code.(ø­º•8½ÙÿÅ³0
->cpp:S125"Remove the commented out code.(¬Šèäşÿÿÿÿ8½ÙÿÅ³0
-r	cpp:S3490"VUse "=default" instead of the default implementation of this special member functions.(ÜŸÓŸ8‰ÜÿÅ³0
-N	cpp:S3471
-"2Annotate this function with "override" or "final".(ÉÇûÑ8‰ÜÿÅ³0
-S	cpp:S3471"2Annotate this function with "override" or "final".(ø«ºìúÿÿÿÿ8‰ÜÿÅ³0
-r	cpp:S3490"VUse "=default" instead of the default implementation of this special member functions.(Ş‹˜8ŠÜÿÅ³0
-N	cpp:S3471"2Annotate this function with "override" or "final".(Ş‹˜8ŠÜÿÅ³0

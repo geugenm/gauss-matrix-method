@@ -8,7 +8,7 @@ public:
     explicit RelativeError(const InconsistencyVector &inconsistencyVector, const Matrix &initialMatrix);
 
     void PrepareSystem() {
-        const uint64_t columnsNumber = this->_initialMatrixEquation->GetColumnsNumber();
+        const uint64_t columnsNumber = this->_initialMatrixEquation->GetRowsNumber();
 
         for (uint64_t i = 0; i < columnsNumber; i++) {
             this->_initialMatrixEquation->operator[](i)[columnsNumber - 1] = this->_inconsistencyVector->FindRowSum(i);
@@ -16,6 +16,7 @@ public:
     };
 
     void SolveInconsistentEquation() {
+        this->PrepareSystem();
         this->_initialMatrixEquation->SolveSystem();
     }
 
@@ -48,7 +49,7 @@ public:
         return maxInconsistencyValue;
     }
 
-    void Print() const {
+    void Print() {
         std::cout << "\n Relative Error:" << this->FindMaxDifference() / this->FindMaxFirstRoot() << std::endl;
     }
 

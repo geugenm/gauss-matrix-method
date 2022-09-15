@@ -17,6 +17,8 @@ struct OperableSet {
 
 class Matrix {
 public:
+    explicit Matrix(const std::vector<std::vector<double80_t>> & source);
+
     explicit Matrix(const uint64_t &rows, const uint64_t &columns);
 
     Matrix(const Matrix &source);

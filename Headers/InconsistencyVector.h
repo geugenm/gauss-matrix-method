@@ -7,7 +7,7 @@ class InconsistencyVector {
 public:
     InconsistencyVector(const InconsistencyVector &source);
 
-    explicit InconsistencyVector(const GaussMatrix &gaussMatrix);
+    explicit InconsistencyVector(const GaussMatrix &gaussMatrix, const Matrix & matrix);
 
     void RecalculateInconsistency();
 
@@ -26,6 +26,8 @@ private:
 
 private:
     std::unique_ptr<GaussMatrix> _gaussMatrix;
+
+    std::unique_ptr<Matrix> _initialMatrix;
 
     std::vector<double80_t> _inconsistencyVector;
 

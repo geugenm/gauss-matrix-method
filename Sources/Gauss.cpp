@@ -3,7 +3,7 @@
 GaussMatrix::GaussMatrix(const Matrix &matrix) {
     this->_matrix = std::make_unique<Matrix>(matrix);
 
-    this->_roots.resize(this->_matrix->GetRowsNumber());
+    this->_roots.resize(this->_matrix->GetRowsNumber() + 1);
 }
 
 void
