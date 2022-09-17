@@ -19,7 +19,7 @@ struct OperableSet {
 
 class Matrix {
 public:
-    explicit Matrix(const std::vector<std::vector<double80_t>> & source);
+    explicit Matrix(const std::vector<std::vector<double80_t>> &source);
 
     explicit Matrix(const uint64_t &rows, const uint64_t &columns);
 
@@ -31,7 +31,13 @@ public:
 
     Matrix operator-(const Matrix &matrixToSubtract) const;
 
-    void ReadFromFile(const std::filesystem::path & filePath);
+    Matrix operator+(const Matrix &matrixToSubtract) const;
+
+    void Append(const Matrix &appendSource);
+
+    void ReadFromFile(const std::filesystem::path &filePath);
+
+    [[nodiscard]] bool IsEmpty() const;
 
     ~Matrix() = default;
 
@@ -55,7 +61,7 @@ public:
 
     void RandomInit(const double80_t &minRandom, const double80_t &maxRandom);
 
-    void Print();
+    void Print() const;
 
 private:
     void CheckOperableSet(const OperableSet &operableSet) const;

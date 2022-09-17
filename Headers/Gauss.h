@@ -1,11 +1,13 @@
 #pragma once
 
-#include "Matrix.h"
+#include "EquationMatrix.h"
 
 
 class GaussMatrix {
 public:
-    explicit GaussMatrix(const Matrix &matrix);
+    explicit GaussMatrix(const Matrix & source);
+
+    explicit GaussMatrix(const EquationMatrix &matrix);
 
     GaussMatrix(const GaussMatrix &source);
 
@@ -42,8 +44,8 @@ public:
     ~GaussMatrix() = default;
 
 private:
-    std::unique_ptr<Matrix> _matrix;
+    std::unique_ptr<EquationMatrix> _equationMatrix;
 
-    std::vector<double80_t> _roots;
+    std::unique_ptr<Matrix> _roots;
 };
 

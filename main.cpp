@@ -1,50 +1,20 @@
-#include <iostream>
-#include "headers/Matrix.h"
-#include "headers/Gauss.h"
-#include "headers/InconsistencyVector.h"
-#include "headers/RelativeError.h"
-
-// Todo:
-// 1. Write unit tests
-// 2. Refactor this trash code
-
+#include "Headers/Gauss.h"
 
 int main() {
-    std::vector<std::vector<double80_t>> data{};
-    data.resize(3);
-    for (uint64_t i = 0; i < 3; i++) {
-        data[i].resize(4);
-    }
+    std::unique_ptr<Matrix> testTaskMatrix = std::make_unique<Matrix>(3, 4);
+    testTaskMatrix->ReadFromFile("../matrix.txt");
+    testTaskMatrix->Print();
+    EquationMatrix suka(*testTaskMatrix);
+    suka.Print();
 
-    data[0][0] = 1.0;
-    data[0][1] = 2.0;
-    data[0][2] = 1.0;
-    data[0][3] = 1.0;
-
-    data[1][0] = -1.0;
-    data[1][1] = -2.0;
-    data[1][2] = 2.0;
-    data[1][3] = 1.0;
-
-    data[2][0] = 0.0;
-    data[2][1] = 1.0;
-    data[2][2] = 1.0;
-    data[2][3] = 2.0;
-
-    Matrix testTaskMatrix(data);
-
-    GaussMatrix testMatrix(testTaskMatrix);
+    /*GaussMatrix testMatrix(*testTaskMatrix);
+    testTaskMatrix->Print();
     testMatrix.Print();
 
     testMatrix.SolveSystem();
     testMatrix.Print();
 
     testMatrix.PrintRoots();
-    InconsistencyVector test(testMatrix, testTaskMatrix);
-    test.Print();
-
-    RelativeError testError(test, testTaskMatrix);
-    testError.SolveInconsistentEquation();
-    testError.Print();
+    testTaskMatrix->Print();*/
     return 0;
 }

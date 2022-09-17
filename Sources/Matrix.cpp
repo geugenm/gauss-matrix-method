@@ -82,7 +82,7 @@ void Matrix::RandomInit(const double80_t &minRandom, const double80_t &maxRandom
     }
 }
 
-void Matrix::Print() {
+void Matrix::Print() const {
     const uint64_t precision = 2;
     const uint64_t width = 7;
 
@@ -108,7 +108,7 @@ void Matrix::CheckOperableSet(const OperableSet &operableSet) const {
 
 Matrix Matrix::operator*(const Matrix &multiplier) const {
     if (this->GetColumnsNumber() != multiplier.GetRowsNumber()) {
-        throw(std::invalid_argument("Multiplied matrices should have equal columns and rows number"));
+        throw (std::invalid_argument("Multiplied matrices should have equal columns and rows number"));
     }
 
     Matrix result(this->GetRowsNumber(), multiplier.GetColumnsNumber());
@@ -135,7 +135,7 @@ Matrix &Matrix::operator=(const Matrix &source) {
     return *this;
 }
 
-Matrix::Matrix(const std::vector<std::vector<double80_t>> & source) {
+Matrix::Matrix(const std::vector<std::vector<double80_t>> &source) {
     if (source.empty()) {
         throw std::invalid_argument("Source vector is empty");
     }
@@ -149,13 +149,13 @@ void Matrix::ReadFromFile(const std::filesystem::path &filePath) {
     std::ifstream sourceFile(filePath);
 
     if (sourceFile.fail()) {
-        throw(std::invalid_argument("Invalid matrix file path given"));
+        throw (std::invalid_argument("Invalid matrix file path given"));
     }
 
     for (uint64_t i = 0; i < this->_rows; i++) {
         for (uint64_t j = 0; j < this->_columns; j++) {
             if (!(sourceFile >> this->_data[i][j])) {
-                throw(std::invalid_argument("Matrix file read error. Double data expected."));
+                throw (std::invalid_argument("Matrix file read error. Double data expected."));
             }
         }
     }
@@ -164,9 +164,10 @@ void Matrix::ReadFromFile(const std::filesystem::path &filePath) {
 }
 
 Matrix Matrix::operator-(const Matrix &matrixToSubtract) const {
-    const bool isAbleToSubtract = (this->GetRowsNumber() == matrixToSubtract.GetRowsNumber()) && (this->GetColumnsNumber() == matrixToSubtract.GetColumnsNumber());
+    const bool isAbleToSubtract = (this->GetRowsNumber() == matrixToSubtract.GetRowsNumber()) &&
+                                  (this->GetColumnsNumber() == matrixToSubtract.GetColumnsNumber());
     if (!isAbleToSubtract) {
-        throw(std::invalid_argument("Matrices should have equal number of rows and columns"));
+        throw (std::invalid_argument("Matrices should have equal number of rows and columns"));
     }
 
     Matrix result(this->GetRowsNumber(), this->GetColumnsNumber());
@@ -178,4 +179,39 @@ Matrix Matrix::operator-(const Matrix &matrixToSubtract) const {
     }
 
     return result;
+}
+
+Matrix Matrix::operator+(const Matrix &matrixToSubtract) const {
+    const bool isAbleToSum = (this->GetRowsNumber() == matrixToSubtract.GetRowsNumber()) &&
+                             (this->GetColumnsNumber() == matrixToSubtract.GetColumnsNumber());
+    if (!isAbleToSum) {
+        throw (std::invalid_argument("Matrices should have equal number of rows and columns"));
+    }
+
+    Matrix result(this->GetRowsNumber(), this->GetColumnsNumber());
+
+    for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
+        for (uint64_t j = 0; j < this->GetColumnsNumber(); j++) {
+            result[i][j] = this->operator[](i)[j] + matrixToSubtract[i][j];
+        }
+    }
+
+    return result;
+}
+
+
+bool Matrix::IsEmpty() const {
+    const bool emptinessCriteria =
+            this->_data.empty() || this->GetRowsNumber() == 0 || this->GetColumnsNumber() == 0;
+    return emptinessCriteria;
+}
+
+void Matrix::Append(const Matrix &appendSource) {
+    if (appendSource.IsEmpty()) {
+        throw (std::invalid_argument("Empty append source"));
+    }
+
+    for (uint64_t i = 0; i < appendSource.GetRowsNumber(); i++) {
+        this->_data.push_back(appendSource._data[i]);
+    }
 }
