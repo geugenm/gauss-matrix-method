@@ -103,7 +103,6 @@ Matrix &EquationMatrix::GetRightSide() const {
 }
 
 void EquationMatrix::Print() const {
-    const uint64_t precision = 2;
     const uint64_t width = 7;
 
     std::cout.setf(std::ios::right);
@@ -113,7 +112,7 @@ void EquationMatrix::Print() const {
         for (uint64_t j = 0; j < this->_leftSide->GetColumnsNumber(); j++) {
             std::cout << std::setw(width) << this->_leftSide->operator[](i)[j] << " ";
         }
-        std::cout << " =" << std::setw(width) << this->_rightSide->operator[](i)[0] << std::endl;
+        std::cout << "=" << std::setw(width) << this->_rightSide->operator[](i)[0] << std::endl;
     }
 
     std::cout << std::endl;

@@ -11,7 +11,7 @@ GaussMatrix::GaussMatrix(const Matrix &source) {
     this->_equationMatrix = std::make_shared<EquationMatrix>(source);
 
     constexpr uint64_t numberOfRootsColumns = 1;
-    this->_roots = std::make_shared<Matrix>(source.GetColumnsNumber(), numberOfRootsColumns);
+    this->_roots = std::make_shared<Matrix>(source.GetColumnsNumber() - 1, numberOfRootsColumns);
     this->SolveSystem();
 }
 
@@ -49,29 +49,8 @@ GaussMatrix &GaussMatrix::operator=(const GaussMatrix &source) {
 
 void GaussMatrix::Print() const {
     this->_equationMatrix->Print();
-}
 
-void GaussMatrix::PrintRoots() const {
-    const uint64_t precision = 4;
-    const uint64_t width = 7;
-
-    std::cout << std::setprecision(precision);
-
-    for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
-        std::cout << "Root for x" << i << " is: ";
-        std::cout << std::setw(width) << this->_roots->operator[](i)[0] << "\n";
-    }
-    std::cout << std::endl;
-}
-
-double80_t GaussMatrix::GetRoot(const uint64_t &index) const {
-    if (this->_roots->IsEmpty()) {
-        throw (std::out_of_range("Gauss root is empty"));
-    }
-    if (index >= this->GetRowsNumber()) {
-        throw (std::out_of_range("Gauss root index out of range"));
-    }
-    return this->_roots->operator[](index)[0];
+    this->PrintRoots();
 }
 
 uint64_t GaussMatrix::GetRowsNumber() const {
@@ -84,6 +63,20 @@ uint64_t GaussMatrix::GetColumnsNumber() const {
 
 
 // ─── Private Methods ────────────────────────────────────────────────────────────
+
+void GaussMatrix::PrintRoots() const {
+    const uint64_t precision = 4;
+    const uint64_t width = 7;
+
+    std::cout << std::setprecision(precision);
+
+    for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
+        std::cout << "Root for x" << i << " is: ";
+        std::cout << std::setw(width) << this->_roots->operator[](i)[0] << std::endl;
+    }
+
+    std::cout << std::endl;
+}
 
 void
 GaussMatrix::ReplaceDiagonalElementWithTheMaxInTheColumn(const uint64_t &currentColumn) {

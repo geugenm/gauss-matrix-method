@@ -13,8 +13,6 @@ public:
 
     void Print() const;
 
-    [[nodiscard]] double80_t GetRoot(const uint64_t &rowIndex) const;
-
     [[nodiscard]] double80_t FindRowSum(const uint64_t &targetedRow) const;
 
     ~InconsistencyVector() = default;
@@ -25,9 +23,9 @@ private:
     void FindInconsistency();
 
 private:
-    std::unique_ptr<GaussMatrix> _gaussMatrix;
+    std::shared_ptr<GaussMatrix> _gaussMatrix;
 
-    std::unique_ptr<Matrix> _initialMatrix;
+    std::shared_ptr<EquationMatrix> _initialMatrix;
 
     std::vector<double80_t> _inconsistencyVector;
 

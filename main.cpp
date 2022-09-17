@@ -9,8 +9,6 @@ int main() {
     GaussMatrix solvedGaussMatrix(initialMatrix);
     solvedGaussMatrix.Print();
 
-    solvedGaussMatrix.PrintRoots();
-
     InconsistencyVector testInconsistency(solvedGaussMatrix, initialMatrix);
     testInconsistency.Print();
 

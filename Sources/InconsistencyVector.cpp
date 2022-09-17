@@ -2,25 +2,29 @@
 
 InconsistencyVector::InconsistencyVector(const GaussMatrix &gaussMatrix, const Matrix & matrix) {
     this->_gaussMatrix = std::make_unique<GaussMatrix>(gaussMatrix);
+    this->_initialMatrix = std::make_shared<EquationMatrix>(matrix);
+
     this->_inconsistencyVector.resize(this->_gaussMatrix->GetRowsNumber());
-    this->_initialMatrix = std::make_unique<Matrix>(matrix);
 
     this->RecalculateInconsistency();
 }
 
 void InconsistencyVector::FindInconsistency() {
-    for (uint64_t i = 0; i < this->_gaussMatrix->GetRowsNumber(); i++) {
+    this->_gaussMatrix->GetRootsMatrix().Print();
+    std::unique_ptr<Matrix> wow = std::make_unique<Matrix>(this->_initialMatrix->GetLeftSide() * this->_gaussMatrix->GetRootsMatrix() - this->_initialMatrix->GetRightSide());
+    wow->Print();
+    /*for (uint64_t i = 0; i < this->_gaussMatrix->GetRowsNumber(); i++) {
         const double80_t equationColumnValue = this->_initialMatrix->operator[](i)[
                 this->_gaussMatrix->GetColumnsNumber() - 1];
         this->_inconsistencyVector[i] = this->FindRowSum(i) - equationColumnValue;
-    }
+    }*/
 }
 
 double80_t InconsistencyVector::FindRowSum(const uint64_t &targetedRow) const {
     double80_t sum = 0.0;
-    for (uint64_t j = 0; j < this->_gaussMatrix->GetColumnsNumber() - 1; j++) {
+    /*for (uint64_t j = 0; j < this->_gaussMatrix->GetColumnsNumber() - 1; j++) {
         sum += this->_gaussMatrix->GetRoot(j) * this->_initialMatrix->operator[](targetedRow)[j];
-    }
+    }*/
     return sum;
 }
 
@@ -55,11 +59,7 @@ void InconsistencyVector::RecalculateInconsistency() {
 InconsistencyVector::InconsistencyVector(const InconsistencyVector &source) {
     this->_gaussMatrix = std::make_unique<GaussMatrix>(*source._gaussMatrix);
     this->_inconsistencyVector.resize(source._gaussMatrix->GetRowsNumber());
-    this->_initialMatrix = std::make_unique<Matrix>(*source._initialMatrix);
+    this->_initialMatrix = std::make_unique<EquationMatrix>(*source._initialMatrix);
 
     this->RecalculateInconsistency();
-}
-
-double80_t InconsistencyVector::GetRoot(const uint64_t &rowIndex) const {
-    return this->_gaussMatrix->GetRoot(rowIndex);
 }

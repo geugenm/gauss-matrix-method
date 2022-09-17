@@ -18,15 +18,15 @@ public:
     [[nodiscard]] std::vector<double80_t> const &operator[](const uint64_t &index) const;
 
     // ─── Public Methods ─────────────────────────────────────────────────────────────
-    [[nodiscard]] double80_t GetRoot(const uint64_t &index) const;
-
     [[nodiscard]] uint64_t GetRowsNumber() const;
 
     [[nodiscard]] uint64_t GetColumnsNumber() const;
 
     void Print() const;
 
-    void PrintRoots() const;
+    [[nodiscard]] Matrix & GetRootsMatrix() const {
+        return *this->_roots;
+    }
 
     ~GaussMatrix() = default;
 
@@ -45,7 +45,9 @@ private:
 
     void SolveSystem();
 
-    void PrepareFirstElement();;
+    void PrepareFirstElement();
+
+    void PrintRoots() const;
 
 private:
     std::shared_ptr<EquationMatrix> _equationMatrix;
