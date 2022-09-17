@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
-# Source directory: C:/Users/gmich/repos/lab-1-Gauss/GoogleUnitTests/googletest
-# Build directory: C:/Users/gmich/repos/lab-1-Gauss/cmake-build-debug/GoogleUnitTests/googletest
+# Source directory: S:/labs/computational-methods/lab-1/GoogleUnitTests/googletest
+# Build directory: S:/labs/computational-methods/lab-1/cmake-build-debug/GoogleUnitTests/googletest
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.

@@ -7,6 +7,8 @@
 #include <iomanip>
 #include <cmath>
 #include <cstdlib>
+#include <filesystem>
+#include <fstream>
 
 using double80_t = long double;
 
@@ -25,7 +27,11 @@ public:
 
     Matrix &operator=(const Matrix &source);
 
-    Matrix &operator*(const Matrix &multiplier);
+    Matrix operator*(const Matrix &multiplier) const;
+
+    Matrix operator-(const Matrix &matrixToSubtract) const;
+
+    void ReadFromFile(const std::filesystem::path & filePath);
 
     ~Matrix() = default;
 

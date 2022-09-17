@@ -106,20 +106,22 @@ void Matrix::CheckOperableSet(const OperableSet &operableSet) const {
     }
 }
 
-Matrix &Matrix::operator*(const Matrix &multiplier) {
-    this->_data = multiplier._data;
-    this->_rows = multiplier.GetRowsNumber();
-    this->_columns = multiplier.GetColumnsNumber();
+Matrix Matrix::operator*(const Matrix &multiplier) const {
+    if (this->GetColumnsNumber() != multiplier.GetRowsNumber()) {
+        throw(std::invalid_argument("Multiplied matrices should have equal columns and rows number"));
+    }
+
+    Matrix result(this->GetRowsNumber(), multiplier.GetColumnsNumber());
 
     for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
         for (uint64_t j = 0; j < multiplier.GetColumnsNumber(); j++) {
             for (uint64_t k = 0; k < multiplier.GetRowsNumber(); k++) {
-                this->operator[](i)[j] += this->operator[](i)[k] * multiplier[k][j];
+                result[i][j] += this->operator[](i)[k] * multiplier[k][j];
             }
         }
     }
 
-    return *this;
+    return result;
 }
 
 Matrix::Matrix(const Matrix &source) : _data(source._data), _rows(source.GetRowsNumber()),
@@ -138,9 +140,42 @@ Matrix::Matrix(const std::vector<std::vector<double80_t>> & source) {
         throw std::invalid_argument("Source vector is empty");
     }
     this->_rows = source.size();
-    this->_columns = source[NULL].size();
+    this->_columns = source[0].size();
 
     this->_data = source;
+}
 
+void Matrix::ReadFromFile(const std::filesystem::path &filePath) {
+    std::ifstream sourceFile(filePath);
 
+    if (sourceFile.fail()) {
+        throw(std::invalid_argument("Invalid matrix file path given"));
+    }
+
+    for (uint64_t i = 0; i < this->_rows; i++) {
+        for (uint64_t j = 0; j < this->_columns; j++) {
+            if (!(sourceFile >> this->_data[i][j])) {
+                throw(std::invalid_argument("Matrix file read error. Double data expected."));
+            }
+        }
+    }
+
+    sourceFile.close();
+}
+
+Matrix Matrix::operator-(const Matrix &matrixToSubtract) const {
+    const bool isAbleToSubtract = (this->GetRowsNumber() == matrixToSubtract.GetRowsNumber()) && (this->GetColumnsNumber() == matrixToSubtract.GetColumnsNumber());
+    if (!isAbleToSubtract) {
+        throw(std::invalid_argument("Matrices should have equal number of rows and columns"));
+    }
+
+    Matrix result(this->GetRowsNumber(), this->GetColumnsNumber());
+
+    for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
+        for (uint64_t j = 0; j < this->GetColumnsNumber(); j++) {
+            result[i][j] = this->operator[](i)[j] - matrixToSubtract[i][j];
+        }
+    }
+
+    return result;
 }
