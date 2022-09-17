@@ -1,6 +1,9 @@
 #include "Headers/RelativeError.h"
 
 int main() {
+    Matrix sexWithGordon;
+    sexWithGordon.Print();
+
     Matrix initialMatrix(3, 4);
     initialMatrix.ReadFromFile("../matrix.txt");
     initialMatrix.Print();
