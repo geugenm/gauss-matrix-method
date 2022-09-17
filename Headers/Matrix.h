@@ -55,7 +55,7 @@ public:
 
     void SubtractMultipliedRow(const OperableSet &subtractionSet, const double80_t &multiplier);
 
-    [[nodiscard]] uint64_t GetMaxColumnElementIndex(const uint64_t &columnIndex, const uint64_t &fromRow = 0) const;
+    [[nodiscard]] uint64_t GetMaxColumnElementIndex(const uint64_t &columnIndex) const;
 
     void RandomInit(const double80_t &minRandom, const double80_t &maxRandom);
 

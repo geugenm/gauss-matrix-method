@@ -20,7 +20,7 @@ EquationMatrix::EquationMatrix(const Matrix &matrix) {
             this->_leftSide->operator[](i)[j] = matrix[i][j];
         }
         this->_rightSide->operator[](
-                i)[matrix.GetColumnsNumber()] = matrix[i][matrix.GetColumnsNumber()];
+                i)[0] = matrix[i][matrix.GetColumnsNumber() - 1];
     }
 }
 
@@ -58,21 +58,21 @@ void EquationMatrix::SubtractMultipliedRow(const OperableSet &subtractionSet, co
     this->_rightSide->SubtractMultipliedRow(subtractionSet, multiplier);
 }
 
-uint64_t EquationMatrix::GetMaxColumnElementIndex(const uint64_t &columnIndex, const uint64_t &fromRow) const {
+uint64_t EquationMatrix::GetMaxColumnElementIndex(const uint64_t &columnIndex) const {
     if (columnIndex >= this->_leftSide->GetColumnsNumber() + this->_rightSide->GetColumnsNumber()) {
         throw (std::out_of_range("Out of column range"));
     }
 
-    if (fromRow >= this->_leftSide->GetRowsNumber()) {
+    if (columnIndex >= this->_leftSide->GetRowsNumber()) {
         throw (std::out_of_range("Out of row range"));
     }
 
     if (columnIndex >= this->_leftSide->GetColumnsNumber()) {
-        return this->_rightSide->GetMaxColumnElementIndex(0, fromRow);
+        return this->_rightSide->GetMaxColumnElementIndex(0);
     }
 
     if (columnIndex < this->_leftSide->GetColumnsNumber()) {
-        return this->_leftSide->GetMaxColumnElementIndex(columnIndex, fromRow);
+        return this->_leftSide->GetMaxColumnElementIndex(columnIndex);
     }
 
     throw (std::logic_error("GetMaxColumnElementIndex : Unknown error in equation"));
@@ -106,7 +106,6 @@ void EquationMatrix::Print() const {
     const uint64_t precision = 2;
     const uint64_t width = 7;
 
-    std::cout << std::setprecision(precision);
     std::cout.setf(std::ios::right);
     std::cout.setf(std::ios::fixed);
 
@@ -114,7 +113,7 @@ void EquationMatrix::Print() const {
         for (uint64_t j = 0; j < this->_leftSide->GetColumnsNumber(); j++) {
             std::cout << std::setw(width) << this->_leftSide->operator[](i)[j] << " ";
         }
-        std::cout << " = " << std::setw(width) << this->_rightSide->operator[](i)[0] << std::endl;
+        std::cout << " =" << std::setw(width) << this->_rightSide->operator[](i)[0] << std::endl;
     }
 
     std::cout << std::endl;

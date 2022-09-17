@@ -1,17 +1,18 @@
 #include "Headers/Gauss.h"
+#include "Headers/InconsistencyVector.h"
 
 int main() {
-    Matrix testTaskMatrix(3, 4);
-    testTaskMatrix.ReadFromFile("../matrix.txt");
-    testTaskMatrix.Print();
+    Matrix initialMatrix(3, 4);
+    initialMatrix.ReadFromFile("../matrix.txt");
+    initialMatrix.Print();
 
-    GaussMatrix testMatrix(testTaskMatrix);
-    testMatrix.Print();
+    GaussMatrix solvedGaussMatrix(initialMatrix);
+    solvedGaussMatrix.Print();
 
-    testMatrix.SolveSystem();
-    testMatrix.Print();
+    solvedGaussMatrix.PrintRoots();
 
-    testMatrix.PrintRoots();
-    testTaskMatrix.Print();
+    InconsistencyVector testInconsistency(solvedGaussMatrix, initialMatrix);
+    testInconsistency.Print();
+
     return 0;
 }

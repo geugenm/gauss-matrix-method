@@ -18,7 +18,7 @@ public:
 
     void SubtractMultipliedRow(const OperableSet &subtractionSet, const double80_t &multiplier);
 
-    [[nodiscard]] uint64_t GetMaxColumnElementIndex(const uint64_t &columnIndex, const uint64_t &fromRow) const;
+    [[nodiscard]] uint64_t GetMaxColumnElementIndex(const uint64_t &columnIndex) const;
 
     void SwapRows(const uint64_t &firstRow, const uint64_t &secondRow);
 
