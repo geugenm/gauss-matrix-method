@@ -61,12 +61,14 @@ void Matrix::SubtractMultipliedRow(const OperableSet &subtractionSet, const doub
 uint64_t Matrix::GetMaxColumnElementIndex(const uint64_t &columnIndex) const {
     std::vector<double80_t> columnVector{};
     columnVector.resize(this->GetRowsNumber());
+
     for (uint64_t i = columnIndex; i < this->GetRowsNumber(); i++) {
         columnVector[i] = this->operator[](i)[columnIndex];
     }
 
     auto it = std::max_element(columnVector.begin(), columnVector.end(),
                                [](double80_t a, double80_t b) { return std::fabs(a) < std::fabs(b); });
+
     return (std::distance(columnVector.begin(), it));
 }
 

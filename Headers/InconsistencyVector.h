@@ -7,13 +7,9 @@ class InconsistencyVector {
 public:
     InconsistencyVector(const InconsistencyVector &source);
 
-    explicit InconsistencyVector(const GaussMatrix &gaussMatrix, const Matrix & matrix);
-
-    void RecalculateInconsistency();
+    explicit InconsistencyVector(const GaussMatrix &gaussMatrix, const Matrix &matrix);
 
     void Print() const;
-
-    [[nodiscard]] double80_t FindRowSum(const uint64_t &targetedRow) const;
 
     ~InconsistencyVector() = default;
 
@@ -22,12 +18,14 @@ private:
 
     void FindInconsistency();
 
+    void CalculateInconsistency();
+
 private:
-    std::shared_ptr<GaussMatrix> _gaussMatrix;
+    std::shared_ptr<Matrix> _gaussRoots;
 
     std::shared_ptr<EquationMatrix> _initialMatrix;
 
-    std::vector<double80_t> _inconsistencyVector;
+    std::shared_ptr<Matrix> _inconsistencyVector;
 
     double80_t _maxAbsoluteInconsistency;
 };
