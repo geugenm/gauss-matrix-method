@@ -79,6 +79,12 @@ build CMakeFiles/lab_1.dir/Sources/InconsistencyVector.cpp.obj: CXX_COMPILER__la
   OBJECT_DIR = CMakeFiles\lab_1.dir
   OBJECT_FILE_DIR = CMakeFiles\lab_1.dir\Sources
 
+build CMakeFiles/lab_1.dir/Sources/RelativeError.cpp.obj: CXX_COMPILER__lab_1_Debug S$:/labs/computational-methods/lab-1/Sources/RelativeError.cpp || cmake_object_order_depends_target_lab_1
+  DEP_FILE = CMakeFiles\lab_1.dir\Sources\RelativeError.cpp.obj.d
+  FLAGS = -g -std=gnu++23
+  OBJECT_DIR = CMakeFiles\lab_1.dir
+  OBJECT_FILE_DIR = CMakeFiles\lab_1.dir\Sources
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target lab_1
@@ -87,7 +93,7 @@ build CMakeFiles/lab_1.dir/Sources/InconsistencyVector.cpp.obj: CXX_COMPILER__la
 #############################################
 # Link the executable lab_1.exe
 
-build lab_1.exe: CXX_EXECUTABLE_LINKER__lab_1_Debug CMakeFiles/lab_1.dir/main.cpp.obj CMakeFiles/lab_1.dir/Sources/Matrix.cpp.obj CMakeFiles/lab_1.dir/Sources/Gauss.cpp.obj CMakeFiles/lab_1.dir/Sources/EquationMatrix.cpp.obj CMakeFiles/lab_1.dir/Sources/InconsistencyVector.cpp.obj
+build lab_1.exe: CXX_EXECUTABLE_LINKER__lab_1_Debug CMakeFiles/lab_1.dir/main.cpp.obj CMakeFiles/lab_1.dir/Sources/Matrix.cpp.obj CMakeFiles/lab_1.dir/Sources/Gauss.cpp.obj CMakeFiles/lab_1.dir/Sources/EquationMatrix.cpp.obj CMakeFiles/lab_1.dir/Sources/InconsistencyVector.cpp.obj CMakeFiles/lab_1.dir/Sources/RelativeError.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\lab_1.dir

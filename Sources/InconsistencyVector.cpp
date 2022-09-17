@@ -33,7 +33,7 @@ void InconsistencyVector::Print() const {
                   << std::endl;
     }
 
-    std::cout << "Norm: " << this->_maxAbsoluteInconsistency << std::endl;
+    std::cout << "\nNorm: " << this->_maxAbsoluteInconsistency << std::endl;
 }
 
 void InconsistencyVector::FindNorm() {
@@ -44,4 +44,8 @@ void InconsistencyVector::FindNorm() {
 void InconsistencyVector::CalculateInconsistency() {
     this->FindInconsistency();
     this->FindNorm();
+}
+
+Matrix InconsistencyVector::GetRootsMatrix() const {
+    return *this->_gaussRoots;
 }

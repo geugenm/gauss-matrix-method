@@ -8,6 +8,8 @@ public:
     // ─── Constructors Section ───────────────────────────────────────────────────────
     explicit GaussMatrix(const Matrix & source);
 
+    explicit GaussMatrix(const EquationMatrix & source);
+
     GaussMatrix(const GaussMatrix &source);
 
     // ─── Operators ──────────────────────────────────────────────────────────────────

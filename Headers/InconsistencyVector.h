@@ -11,6 +11,8 @@ public:
 
     void Print() const;
 
+    [[nodiscard]] Matrix GetRootsMatrix() const;
+
     ~InconsistencyVector() = default;
 
 private:

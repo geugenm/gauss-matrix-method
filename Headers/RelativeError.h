@@ -5,56 +5,51 @@
 
 class RelativeError {
 public:
-    explicit RelativeError(const InconsistencyVector &inconsistencyVector, const Matrix &initialMatrix);
+    explicit RelativeError(const InconsistencyVector &inconsistencyVector, const Matrix &initialMatrix) {
+        this->_initialMatrix = std::make_shared<EquationMatrix>(initialMatrix);
+        this->_inconsistencyVector = std::make_shared<InconsistencyVector>(inconsistencyVector);
 
-    void PrepareSystem() {
-        const uint64_t columnsNumber = this->_initialMatrixEquation->GetRowsNumber();
-
-        for (uint64_t i = 0; i < columnsNumber; i++) {
-            this->_initialMatrixEquation->operator[](i)[columnsNumber - 1] = this->_inconsistencyVector->FindRowSum(i);
-        }
-    };
-
-    void SolveInconsistentEquation() {
-        this->PrepareSystem();
-        this->_initialMatrixEquation->SolveSystem();
+        this->CreateSystem();
+        this->SolveTheSystem();
     }
 
-    [[nodiscard]] double80_t FindMaxFirstRoot() const {
-        std::vector<double80_t> firstMaxRoot;
+    void CreateSystem() {
+        Matrix temp = this->_initialMatrix->GetLeftSide() * this->_inconsistencyVector->GetRootsMatrix();
+        std::swap(this->_initialMatrix->GetRightSide(), temp);
 
-        for (uint64_t i = 0; i < this->_initialMatrixEquation->GetRowsNumber(); i++) {
-            firstMaxRoot.push_back(this->_initialMatrixEquation->GetRoot(i));
-        }
-
-        const double80_t maxInconsistencyValue = *std::max_element(firstMaxRoot.begin(), firstMaxRoot.end(),
-                                                                   [](double80_t a, double80_t b) {
-                                                                       return std::fabs(a) < std::fabs(b);
-                                                                   });
-
-        return maxInconsistencyValue;
     }
 
-    [[nodiscard]] double80_t FindMaxDifference() const {
-        std::vector<double80_t> difference;
-        for (uint64_t i = 0; i < this->_initialMatrixEquation->GetRowsNumber(); i++) {
-            difference.push_back(this->_initialMatrixEquation->GetRoot(i) - this->_inconsistencyVector->GetRoot(i));
-        }
-
-        const double80_t maxInconsistencyValue = *std::max_element(difference.begin(), difference.end(),
-                                                                   [](double80_t a, double80_t b) {
-                                                                       return std::fabs(a) < std::fabs(b);
-                                                                   });
-
-        return maxInconsistencyValue;
+    void SolveTheSystem() {
+        this->_gaussMatrix = std::make_shared<GaussMatrix>(*this->_initialMatrix);
     }
 
-    void Print() {
-        std::cout << "\n Relative Error:" << this->FindMaxDifference() / this->FindMaxFirstRoot() << std::endl;
+    [[nodiscard]] double80_t GetMaxAbsoluteElement(const Matrix & matrix) const {
+        const uint64_t maxDifferenceIndex = matrix.GetMaxColumnElementIndex(0);
+        return std::fabs(matrix[maxDifferenceIndex][0]);
     }
+
+    void Calculate() {
+        const Matrix rootsDifference = this->_gaussMatrix->GetRootsMatrix() - this->_inconsistencyVector->GetRootsMatrix();
+
+        const double80_t maxAbsoluteDifference = this->GetMaxAbsoluteElement(rootsDifference);
+
+        const double80_t maxAbsoluteFirstAttemptRootIndex = this->GetMaxAbsoluteElement(this->_inconsistencyVector->GetRootsMatrix());
+
+        this->_relativeError = maxAbsoluteDifference / maxAbsoluteFirstAttemptRootIndex;
+    }
+
+    void Print() const {
+        std::cout << "\nMax relative error is: " << this->_relativeError << std::endl;
+    }
+
+    ~RelativeError() = default;
 
 private:
-    std::unique_ptr<InconsistencyVector> _inconsistencyVector;
+    std::shared_ptr<EquationMatrix> _initialMatrix;
 
-    std::unique_ptr<GaussMatrix> _initialMatrixEquation;
+    std::shared_ptr<InconsistencyVector> _inconsistencyVector;
+
+    std::shared_ptr<GaussMatrix> _gaussMatrix;
+
+    double80_t _relativeError;
 };

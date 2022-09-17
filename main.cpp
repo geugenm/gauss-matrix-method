@@ -1,5 +1,4 @@
-#include "Headers/Gauss.h"
-#include "Headers/InconsistencyVector.h"
+#include "Headers/RelativeError.h"
 
 int main() {
     Matrix initialMatrix(3, 4);
@@ -9,8 +8,11 @@ int main() {
     GaussMatrix solvedGaussMatrix(initialMatrix);
     solvedGaussMatrix.Print();
 
-    InconsistencyVector testInconsistency(solvedGaussMatrix, initialMatrix);
-    testInconsistency.Print();
+    InconsistencyVector inconsistencyVector(solvedGaussMatrix, initialMatrix);
+    inconsistencyVector.Print();
+
+    RelativeError relativeError(inconsistencyVector, initialMatrix);
+    relativeError.Print();
 
     return 0;
 }

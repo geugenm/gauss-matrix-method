@@ -3,7 +3,13 @@
 
 // ─── Constructors Section ───────────────────────────────────────────────────────
 
-GaussMatrix::GaussMatrix(const Matrix &source) {
+GaussMatrix::GaussMatrix(const GaussMatrix &source) {
+    this->_equationMatrix = std::make_shared<EquationMatrix>(*source._equationMatrix);
+    this->_roots = std::make_shared<Matrix>(*source._roots);
+    this->SolveSystem();
+}
+
+GaussMatrix::GaussMatrix(const EquationMatrix &source) {
     if (source.IsEmpty()) {
         throw (std::invalid_argument("EquationMatrix matrix for Gauss is empty"));
     }
@@ -15,10 +21,8 @@ GaussMatrix::GaussMatrix(const Matrix &source) {
     this->SolveSystem();
 }
 
-GaussMatrix::GaussMatrix(const GaussMatrix &source) {
-    this->_equationMatrix = std::make_shared<EquationMatrix>(*source._equationMatrix);
-    this->_roots = std::make_shared<Matrix>(*source._roots);
-    this->SolveSystem();
+GaussMatrix::GaussMatrix(const Matrix &source) : GaussMatrix(*std::make_shared<EquationMatrix>(source)) {
+
 }
 
 
