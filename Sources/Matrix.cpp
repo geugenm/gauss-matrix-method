@@ -135,16 +135,6 @@ Matrix &Matrix::operator=(const Matrix &source) {
     return *this;
 }
 
-Matrix::Matrix(const std::vector<std::vector<double80_t>> &source) {
-    if (source.empty()) {
-        throw std::invalid_argument("Source vector is empty");
-    }
-    this->_rows = source.size();
-    this->_columns = source[0].size();
-
-    this->_data = source;
-}
-
 void Matrix::ReadFromFile(const std::filesystem::path &filePath) {
     std::ifstream sourceFile(filePath);
 

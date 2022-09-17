@@ -4,7 +4,7 @@
 
 class EquationMatrix {
 public:
-    explicit EquationMatrix(const Matrix &equationMatrix);
+    explicit EquationMatrix(const Matrix &matrix);
 
     EquationMatrix(const EquationMatrix &source);
 
@@ -41,7 +41,7 @@ public:
     ~EquationMatrix() = default;
 
 private:
-    std::unique_ptr<Matrix> _leftSide;
+    std::shared_ptr<Matrix> _leftSide;
 
-    std::unique_ptr<Matrix> _rightSide;
+    std::shared_ptr<Matrix> _rightSide;
 };

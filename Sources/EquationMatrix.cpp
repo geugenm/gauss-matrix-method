@@ -1,26 +1,26 @@
 #include "../Headers/EquationMatrix.h"
 
-EquationMatrix::EquationMatrix(const Matrix &equationMatrix) {
-    if (equationMatrix.IsEmpty()) {
+EquationMatrix::EquationMatrix(const Matrix &matrix) {
+    if (matrix.IsEmpty()) {
         throw (std::invalid_argument("Source matrix is empty"));
     }
 
     constexpr uint64_t rowsAndColumnsDifference = 1;
-    if (equationMatrix.GetColumnsNumber() != equationMatrix.GetRowsNumber() + rowsAndColumnsDifference) {
+    if (matrix.GetColumnsNumber() != matrix.GetRowsNumber() + rowsAndColumnsDifference) {
         throw (std::invalid_argument(
                 "Matrix columns and rows should differ by " + std::to_string(rowsAndColumnsDifference)));
     }
 
-    this->_leftSide = std::make_unique<Matrix>(equationMatrix.GetRowsNumber(),
-                                               equationMatrix.GetColumnsNumber() - 1);
-    this->_rightSide = std::make_unique<Matrix>(equationMatrix.GetRowsNumber(), 1);
+    this->_leftSide = std::make_unique<Matrix>(matrix.GetRowsNumber(),
+                                               matrix.GetColumnsNumber() - 1);
+    this->_rightSide = std::make_unique<Matrix>(matrix.GetRowsNumber(), 1);
 
     for (uint64_t i = 0; i < this->_leftSide->GetRowsNumber(); i++) {
         for (uint64_t j = 0; j < this->_leftSide->GetColumnsNumber(); j++) {
-            this->_leftSide->operator[](i)[j] = equationMatrix[i][j];
+            this->_leftSide->operator[](i)[j] = matrix[i][j];
         }
         this->_rightSide->operator[](
-                i)[equationMatrix.GetColumnsNumber()] = equationMatrix[i][equationMatrix.GetColumnsNumber()];
+                i)[matrix.GetColumnsNumber()] = matrix[i][matrix.GetColumnsNumber()];
     }
 }
 
@@ -111,7 +111,7 @@ void EquationMatrix::Print() const {
     std::cout.setf(std::ios::fixed);
 
     for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
-        for (uint64_t j = 0; j < this->GetColumnsNumber(); j++) {
+        for (uint64_t j = 0; j < this->_leftSide->GetColumnsNumber(); j++) {
             std::cout << std::setw(width) << this->_leftSide->operator[](i)[j] << " ";
         }
         std::cout << " = " << std::setw(width) << this->_rightSide->operator[](i)[0] << std::endl;

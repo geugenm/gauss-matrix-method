@@ -44,8 +44,8 @@ public:
     ~GaussMatrix() = default;
 
 private:
-    std::unique_ptr<EquationMatrix> _equationMatrix;
+    std::shared_ptr<EquationMatrix> _equationMatrix;
 
-    std::unique_ptr<Matrix> _roots;
+    std::shared_ptr<Matrix> _roots;
 };
 
