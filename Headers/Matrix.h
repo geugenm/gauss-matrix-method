@@ -85,14 +85,7 @@ public:
 
     Matrix operator+(const Matrix &matrixToSubtract) const;
 
-    bool operator==(const Matrix & comparedTo) {
-        const bool haveEqualRowsNumber = this->GetRowsNumber() == comparedTo.GetRowsNumber();
-        const bool haveEqualColumnsNumber = this->GetColumnsNumber() == comparedTo.GetColumnsNumber();
-
-        const bool haveEqualData = this->_data == comparedTo._data;
-
-        return (haveEqualColumnsNumber && haveEqualRowsNumber && haveEqualData);
-    }
+    bool operator==(const Matrix & comparedTo);
 
     void Append(const Matrix &appendSource);
 
@@ -124,26 +117,9 @@ public:
 
     void Print() const;
 
-    [[nodiscard]] Matrix GetTransposed() const {
-        if (this->GetColumnsNumber() != this->GetRowsNumber()) {
-            throw (std::logic_error("Unable to transpose matrix: columns != rows"));
-        }
+    [[nodiscard]] Matrix GetTransposed() const;
 
-        Matrix result(this->GetRowsNumber(), this->GetColumnsNumber());
-
-        for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
-            for (uint64_t j = 0; j < this->GetColumnsNumber(); j++) {
-                result[i][j] = this->operator[](j)[i];
-            }
-        }
-
-        return result;
-    }
-
-    [[nodiscard]] bool IsSymmetric() const {
-        Matrix transposed = this->GetTransposed();
-        return (*this == transposed);
-    }
+    [[nodiscard]] bool IsSymmetric() const;
 
 private:
     void CheckOperableSet(const OperableSet &operableSet) const;

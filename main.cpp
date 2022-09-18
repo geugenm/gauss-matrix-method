@@ -2,10 +2,7 @@
 #include "Headers/LdlFactorization.h"
 
 int main() {
-    Matrix testManualInputMatrix;
-    testManualInputMatrix.Print();
-
-    Matrix initialMatrix(3, 3);
+    Matrix initialMatrix(3, 4);
     initialMatrix.ReadFromFile("../matrix.txt");
     initialMatrix.Print();
 
