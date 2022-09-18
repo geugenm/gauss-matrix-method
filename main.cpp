@@ -1,9 +1,7 @@
 #include "Headers/RelativeError.h"
+#include "Headers/LdlFactorization.h"
 
 int main() {
-    Matrix sexWithGordon;
-    sexWithGordon.Print();
-
     Matrix initialMatrix(3, 4);
     initialMatrix.ReadFromFile("../matrix.txt");
     initialMatrix.Print();
@@ -16,6 +14,9 @@ int main() {
 
     RelativeError relativeError(inconsistencyVector, initialMatrix);
     relativeError.Print();
+
+    LdlMatrix ldlMatrix(initialMatrix);
+    ldlMatrix.Print();
 
     return 0;
 }

@@ -28,8 +28,8 @@ EquationMatrix::EquationMatrix(const EquationMatrix &source) {
     if (source.IsEmpty()) {
         throw (std::invalid_argument("EquationMatrix source is empty"));
     }
-    this->_leftSide = std::make_unique<Matrix>(*source._leftSide);
-    this->_rightSide = std::make_unique<Matrix>(*source._rightSide);
+    this->_leftSide = std::make_unique<Matrix>(source.GetLeftSide());
+    this->_rightSide = std::make_unique<Matrix>(source.GetRightSide());
 }
 
 EquationMatrix &EquationMatrix::operator=(const EquationMatrix &source) {

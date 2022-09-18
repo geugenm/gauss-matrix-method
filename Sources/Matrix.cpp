@@ -207,3 +207,62 @@ void Matrix::Append(const Matrix &appendSource) {
         this->_data.push_back(appendSource._data[i]);
     }
 }
+
+bool Matrix::operator==(const Matrix &comparedTo) {
+    const bool haveEqualRowsNumber = this->GetRowsNumber() == comparedTo.GetRowsNumber();
+    const bool haveEqualColumnsNumber = this->GetColumnsNumber() == comparedTo.GetColumnsNumber();
+
+    const bool haveEqualData = this->_data == comparedTo._data;
+
+    return (haveEqualColumnsNumber && haveEqualRowsNumber && haveEqualData);
+}
+
+Matrix Matrix::GetTransposed() const {
+    if (this->GetColumnsNumber() != this->GetRowsNumber()) {
+        throw (std::logic_error("Unable to transpose matrix: columns != rows"));
+    }
+
+    Matrix result(this->GetRowsNumber(), this->GetColumnsNumber());
+
+    for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
+        for (uint64_t j = 0; j < this->GetColumnsNumber(); j++) {
+            result[i][j] = this->operator[](j)[i];
+        }
+    }
+
+    return result;
+}
+
+bool Matrix::IsSymmetric() const {
+    Matrix transposed = this->GetTransposed();
+    return (*this == transposed);
+}
+
+Matrix::Matrix() : Matrix(3, 4) {
+    QualitativeNumbers qualitativeNumbers{};
+    qualitativeNumbers.ObtainData();
+
+    const double80_t patternAlpha = 2.0 * qualitativeNumbers.lambda1 + qualitativeNumbers.lambda2;
+    const double80_t patternBeta = 2.0 * (qualitativeNumbers.lambda1 - qualitativeNumbers.lambda2);
+
+    const double80_t patternGamma = 3.0 * qualitativeNumbers.lambda3;
+    const double80_t patternPhi = - 4.0 * qualitativeNumbers.lambda1 + qualitativeNumbers.lambda2;
+
+    const double80_t patternOmega = patternGamma * patternGamma;
+
+    this->_data[0][0] = 2.0 * qualitativeNumbers.lambda1 + 4.0 * qualitativeNumbers.lambda2;
+    this->_data[1][0] = patternBeta;
+    this->_data[2][0] = patternBeta;
+
+    this->_data[1][0] = patternBeta;
+    this->_data[1][1] = patternAlpha + patternGamma;
+    this->_data[1][2] = patternAlpha - patternGamma;
+
+    this->_data[2][0] = patternBeta;
+    this->_data[2][1] = patternAlpha - patternGamma;
+    this->_data[2][2] = patternAlpha + patternGamma;
+
+    this->_data[2][0] = - 2.0 * patternBeta;
+    this->_data[2][1] = patternPhi + patternOmega;
+    this->_data[2][2] = patternPhi - patternOmega;
+}
