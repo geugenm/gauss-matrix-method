@@ -1,21 +1,11 @@
 #include "Headers/RelativeError.h"
 
 int main() {
-    Matrix sexWithGordon;
-    sexWithGordon.Print();
-
-    Matrix initialMatrix(3, 4);
+    Matrix initialMatrix(3, 3);
     initialMatrix.ReadFromFile("../matrix.txt");
     initialMatrix.Print();
 
-    GaussMatrix solvedGaussMatrix(initialMatrix);
-    solvedGaussMatrix.Print();
-
-    InconsistencyVector inconsistencyVector(solvedGaussMatrix, initialMatrix);
-    inconsistencyVector.Print();
-
-    RelativeError relativeError(inconsistencyVector, initialMatrix);
-    relativeError.Print();
+    std::cout << initialMatrix.IsSymmetric();
 
     return 0;
 }
