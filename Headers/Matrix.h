@@ -48,34 +48,7 @@ public:
 
     Matrix(const Matrix &source);
 
-    explicit Matrix() : Matrix(3, 4) {
-        QualitativeNumbers qualitativeNumbers;
-        qualitativeNumbers.ObtainData();
-
-        const double80_t patternAlpha = 2.0 * qualitativeNumbers.lambda1 + qualitativeNumbers.lambda2;
-        const double80_t patternBeta = 2.0 * (qualitativeNumbers.lambda1 - qualitativeNumbers.lambda2);
-
-        const double80_t patternGamma = 3.0 * qualitativeNumbers.lambda3;
-        const double80_t patternPhi = - 4.0 * qualitativeNumbers.lambda1 + qualitativeNumbers.lambda2;
-
-        const double80_t patternOmega = patternGamma * patternGamma;
-
-        this->_data[0][0] = 2.0 * qualitativeNumbers.lambda1 + 4.0 * qualitativeNumbers.lambda2;
-        this->_data[1][0] = patternBeta;
-        this->_data[2][0] = patternBeta;
-
-        this->_data[1][0] = patternBeta;
-        this->_data[1][1] = patternAlpha + patternGamma;
-        this->_data[1][2] = patternAlpha - patternGamma;
-
-        this->_data[2][0] = patternBeta;
-        this->_data[2][1] = patternAlpha - patternGamma;
-        this->_data[2][2] = patternAlpha + patternGamma;
-
-        this->_data[2][0] = - 2.0 * patternBeta;
-        this->_data[2][1] = patternPhi + patternOmega;
-        this->_data[2][2] = patternPhi - patternOmega;
-    }
+    explicit Matrix();
 
     Matrix &operator=(const Matrix &source);
 
