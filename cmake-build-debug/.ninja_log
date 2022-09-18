@@ -3,7 +3,7 @@
 13	1360	6851493970802150	CMakeFiles/lab_1.dir/Sources/RelativeError.cpp.obj	4f6bf194871fa46c
 7	1547	6851493972662136	CMakeFiles/lab_1.dir/Sources/Gauss.cpp.obj	3636b3267c8be482
 0	1942	6848072652406680	GoogleUnitTests/googletest/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.obj	1c370a621f16498d
-1	156	6851515903006530	build.ninja	c5570dce5039c5ff
+1	156	6851932556414502	build.ninja	c5570dce5039c5ff
 2	1429	6851494137055426	CMakeFiles/lab_1.dir/main.cpp.obj	b6b53f8a8475a877
 5	1652	6851493973705959	CMakeFiles/lab_1.dir/Sources/Matrix.cpp.obj	6fda8c4a57f0f8e5
 9	1572	6851493972902133	CMakeFiles/lab_1.dir/Sources/InconsistencyVector.cpp.obj	d0e33278d0a78784
@@ -11,3 +11,13 @@
 5739	7509	6848072708096689	lib/libgtest.a	6ab756926f2bf95b
 7509	7752	6848072710516718	lib/libgmock.a	fd64cbdd12a88dd8
 11	1491	6851493972112161	CMakeFiles/lab_1.dir/Sources/EquationMatrix.cpp.obj	6ba3ae8c649567da
+5	1325	6852101270743088	CMakeFiles/lab_1.dir/Sources/LdlFactorization.cpp.obj	91de8a5d5a440bb2
+2	1651	6852101273983075	CMakeFiles/lab_1.dir/main.cpp.obj	b6b53f8a8475a877
+1651	2040	6852101277873074	lab_1.exe	79f65aedc31f8598
+3	1404	6852102059791872	CMakeFiles/lab_1.dir/main.cpp.obj	b6b53f8a8475a877
+1404	1620	6852102061931868	lab_1.exe	79f65aedc31f8598
+3	1393	6852102265613533	CMakeFiles/lab_1.dir/main.cpp.obj	b6b53f8a8475a877
+1393	1610	6852102267763518	lab_1.exe	79f65aedc31f8598
+5	1165	6852103007723270	CMakeFiles/lab_1.dir/Sources/LdlFactorization.cpp.obj	91de8a5d5a440bb2
+3	1381	6852103009873267	CMakeFiles/lab_1.dir/main.cpp.obj	b6b53f8a8475a877
+1381	1588	6852103011923254	lab_1.exe	79f65aedc31f8598
