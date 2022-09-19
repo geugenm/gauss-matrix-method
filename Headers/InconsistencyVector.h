@@ -7,6 +7,8 @@ class InconsistencyVector {
 public:
     InconsistencyVector(const InconsistencyVector &source);
 
+    explicit InconsistencyVector(const GaussMatrix &gaussMatrix, const EquationMatrix &matrix);
+
     explicit InconsistencyVector(const GaussMatrix &gaussMatrix, const Matrix &matrix);
 
     void Print() const;

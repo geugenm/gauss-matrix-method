@@ -36,7 +36,7 @@ struct QualitativeNumbers {
     }
 
 private:
-    static void PrintInputMessage(const uint64_t & index) {
+    static void PrintInputMessage(const uint64_t &index) {
         std::cout << "Input lambda" << index << ":";
     }
 };
@@ -58,9 +58,17 @@ public:
 
     Matrix operator+(const Matrix &matrixToSubtract) const;
 
-    bool operator==(const Matrix & comparedTo);
+    bool operator==(const Matrix &comparedTo);
 
     void Append(const Matrix &appendSource);
+
+    void Nullify() {
+        for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
+            for (uint64_t j = 0; j < this->GetColumnsNumber(); j++) {
+                this->operator[](i)[j] = 0.0;
+            }
+        }
+    }
 
     void ReadFromFile(const std::filesystem::path &filePath);
 

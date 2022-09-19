@@ -26,9 +26,7 @@ public:
 
     void Print() const;
 
-    [[nodiscard]] Matrix & GetRootsMatrix() const {
-        return *this->_roots;
-    }
+    [[nodiscard]] Matrix & GetRootsMatrix() const;
 
     ~GaussMatrix() = default;
 

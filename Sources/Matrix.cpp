@@ -6,6 +6,8 @@ Matrix::Matrix(const uint64_t &rows, const uint64_t &columns) : _rows(rows), _co
     for (uint64_t i = 0; i < rows; i++) {
         this->_data[i].resize(columns);
     }
+
+    this->Nullify();
 }
 
 std::vector<double80_t> const &Matrix::operator[](const uint64_t &index) const {
@@ -203,9 +205,17 @@ void Matrix::Append(const Matrix &appendSource) {
         throw (std::invalid_argument("Empty append source"));
     }
 
-    for (uint64_t i = 0; i < appendSource.GetRowsNumber(); i++) {
-        this->_data.push_back(appendSource._data[i]);
+    if (this->GetRowsNumber() != appendSource.GetRowsNumber()) {
+        throw (std::invalid_argument("Append source has more rows than the target matrix"));
     }
+
+    for (uint64_t i = 0; i < appendSource.GetRowsNumber(); i++) {
+        for (uint64_t j = 0; j < appendSource.GetColumnsNumber(); j++) {
+            this->_data[i].push_back(appendSource._data[i][j]);
+        }
+    }
+
+    this->_columns += appendSource.GetColumnsNumber();
 }
 
 bool Matrix::operator==(const Matrix &comparedTo) {

@@ -5,12 +5,17 @@
 
 class RelativeError {
 public:
-    explicit RelativeError(const InconsistencyVector &inconsistencyVector, const Matrix &initialMatrix) {
+    explicit RelativeError(const InconsistencyVector &inconsistencyVector, const EquationMatrix &initialMatrix) {
         this->_initialMatrix = std::make_shared<EquationMatrix>(initialMatrix);
         this->_inconsistencyVector = std::make_shared<InconsistencyVector>(inconsistencyVector);
 
         this->CreateSystem();
         this->SolveTheSystem();
+    }
+
+    explicit RelativeError(const InconsistencyVector &inconsistencyVector, const Matrix &initialMatrix) : RelativeError(
+            inconsistencyVector, *std::make_unique<EquationMatrix>(initialMatrix)) {
+
     }
 
     void CreateSystem() {
@@ -23,17 +28,19 @@ public:
         this->_gaussMatrix = std::make_shared<GaussMatrix>(*this->_initialMatrix);
     }
 
-    [[nodiscard]] double80_t GetMaxAbsoluteElement(const Matrix & matrix) const {
+    [[nodiscard]] static double80_t GetMaxAbsoluteElement(const Matrix &matrix) {
         const uint64_t maxDifferenceIndex = matrix.GetMaxColumnElementIndex(0);
         return std::fabs(matrix[maxDifferenceIndex][0]);
     }
 
     void Calculate() {
-        const Matrix rootsDifference = this->_gaussMatrix->GetRootsMatrix() - this->_inconsistencyVector->GetRootsMatrix();
+        const Matrix rootsDifference =
+                this->_gaussMatrix->GetRootsMatrix() - this->_inconsistencyVector->GetRootsMatrix();
 
-        const double80_t maxAbsoluteDifference = this->GetMaxAbsoluteElement(rootsDifference);
+        const double80_t maxAbsoluteDifference = RelativeError::GetMaxAbsoluteElement(rootsDifference);
 
-        const double80_t maxAbsoluteFirstAttemptRootIndex = this->GetMaxAbsoluteElement(this->_inconsistencyVector->GetRootsMatrix());
+        const double80_t maxAbsoluteFirstAttemptRootIndex = RelativeError::GetMaxAbsoluteElement(
+                this->_inconsistencyVector->GetRootsMatrix());
 
         this->_relativeError = maxAbsoluteDifference / maxAbsoluteFirstAttemptRootIndex;
     }

@@ -1,11 +1,16 @@
 #include "../headers/InconsistencyVector.h"
 
-InconsistencyVector::InconsistencyVector(const GaussMatrix &gaussMatrix, const Matrix &matrix)
+InconsistencyVector::InconsistencyVector(const GaussMatrix &gaussMatrix, const EquationMatrix &matrix)
         : _maxAbsoluteInconsistency(0.0) {
     this->_gaussRoots = std::make_unique<Matrix>(gaussMatrix.GetRootsMatrix());
     this->_initialMatrix = std::make_shared<EquationMatrix>(matrix);
 
     this->CalculateInconsistency();
+}
+
+InconsistencyVector::InconsistencyVector(const GaussMatrix &gaussMatrix, const Matrix &matrix) : InconsistencyVector(
+        gaussMatrix, *std::make_unique<EquationMatrix>(matrix)) {
+
 }
 
 InconsistencyVector::InconsistencyVector(const InconsistencyVector &source) : _maxAbsoluteInconsistency(0.0) {
