@@ -1,4 +1,3 @@
-#include "Headers/RelativeError.h"
 #include "Headers/LdlFactorization.h"
 
 int main() {
@@ -15,8 +14,8 @@ int main() {
     RelativeError relativeError(inconsistencyVector, initialMatrix);
     relativeError.Print();
 
-    LdlMatrix ldlMatrix(initialMatrix);
-    ldlMatrix.Print();
+    //LdlMatrix ldlMatrix(initialMatrix);
+    //ldlMatrix.Print();
 
     return 0;
 }

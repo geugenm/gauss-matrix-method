@@ -143,3 +143,7 @@ void GaussMatrix::PrepareFirstElement() {
     this->ReplaceDiagonalElementWithTheMaxInTheColumn(1);
     this->MakeDiagonalElementOne(1);
 }
+
+Matrix &GaussMatrix::GetRootsMatrix() const {
+    return *this->_roots;
+}

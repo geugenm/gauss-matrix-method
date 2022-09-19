@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Gauss.h"
+#include "RelativeError.h"
 
 /// Theoretical taken from LiveJournal
 /// @see https://nabbla1.livejournal.com/245822.html?ysclid=l86e2zh5w1833261875
@@ -87,11 +87,7 @@ public:
     }
 
     void CalculateUpperTriangle() {
-        for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
-            for (uint64_t j = 0; j < this->GetRowsNumber(); j++) {
-                this->_upperTriangle->operator[](i)[j] = this->_bottomTriangle->operator[](j)[i];
-            }
-        }
+        this->_upperTriangle = std::make_shared<Matrix>(this->_bottomTriangle->GetTransposed());
     }
 
     void FormMatrices() {
@@ -100,16 +96,46 @@ public:
         this->CalculateUpperTriangle();
     }
 
-    void Print() const {
-        this->_bottomTriangle->Print();
-        this->_diagonalMatrix->Print();
-        this->_upperTriangle->Print();
+    [[nodiscard]] GaussMatrix SolveBottomEquation() const {
+        Matrix equation = *this->_bottomTriangle;
+        equation.Append(this->_equation->GetRightSide());
 
-        (*this->_bottomTriangle * *this->_diagonalMatrix * *this->_upperTriangle).Print();
+        return GaussMatrix(equation);
     }
 
-    void FindSolution() {
-        //GaussMatrix ySolution
+    [[nodiscard]] GaussMatrix SolveDiagonalEquation(const GaussMatrix & solvedBottomEquation) const {
+        Matrix diagonalMatrixEquation = *this->_diagonalMatrix;
+        diagonalMatrixEquation.Append(solvedBottomEquation.GetRootsMatrix());
+
+        return GaussMatrix(diagonalMatrixEquation);
+    }
+
+    [[nodiscard]] GaussMatrix SolveUpperEquation(const GaussMatrix & solvedDiagonalEquation) const {
+        Matrix upperTriangleMatrixEquation = *this->_upperTriangle;
+        upperTriangleMatrixEquation.Append(solvedDiagonalEquation.GetRootsMatrix());
+
+        return GaussMatrix(upperTriangleMatrixEquation);
+    }
+
+    [[nodiscard]] GaussMatrix FindSolution() const {
+        GaussMatrix bottomEquation = this->SolveBottomEquation();
+        GaussMatrix diagonalEquation = this->SolveDiagonalEquation(bottomEquation);
+        GaussMatrix upperEquation = this->SolveUpperEquation(diagonalEquation);
+
+        return upperEquation;
+    }
+
+    void Print() const {
+        GaussMatrix result = this->FindSolution();
+
+        std::cout.precision(2);
+        result.Print();
+
+        InconsistencyVector inconsistencyVector(result, *this->_equation);
+        inconsistencyVector.Print();
+
+        RelativeError relativeError(inconsistencyVector, *this->_equation);
+        relativeError.Print();
     }
 
 private:
