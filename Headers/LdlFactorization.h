@@ -8,7 +8,7 @@
 
 class LdlMatrix {
 public:
-    explicit LdlMatrix(const EquationMatrix & equationMatrix) {
+    explicit LdlMatrix(const EquationMatrix &equationMatrix) {
         if (!equationMatrix.GetLeftSide().IsSymmetric()) {
             throw (std::invalid_argument("Matrix should be symmetric in order to proceed LDL factorization"));
         }
@@ -16,11 +16,17 @@ public:
         this->_equation = std::make_shared<EquationMatrix>(equationMatrix);
 
         this->_bottomTriangle = std::make_shared<Matrix>(equationMatrix.GetLeftSide());
+
         this->_diagonalMatrix = std::make_shared<Matrix>(equationMatrix.GetLeftSide());
+        this->_diagonalMatrix->Nullify();
+
         this->_upperTriangle = std::make_shared<Matrix>(equationMatrix.GetLeftSide());
+        this->_upperTriangle->Nullify();
+
+        this->FormMatrices();
     }
 
-    explicit LdlMatrix(const Matrix & matrix) : LdlMatrix(*std::make_unique<EquationMatrix>(matrix)) {
+    explicit LdlMatrix(const Matrix &matrix) : LdlMatrix(*std::make_unique<EquationMatrix>(matrix)) {
     }
 
     [[nodiscard]] uint64_t GetRowsNumber() const {
@@ -32,45 +38,56 @@ public:
     }
 
     void FormBottomTriangle() {
-        for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
-            for (uint64_t j = i + 1; i < this->GetColumnsNumber(); j++) {
+        for (uint64_t i = 0; i < this->GetRowsNumber() - 1; i++) {
+            for (uint64_t j = i + 1; j < this->GetColumnsNumber(); j++) {
                 this->_bottomTriangle->operator[](i)[j] = 0.0;
             }
         }
     }
 
-    [[nodiscard]] double80_t GetAmountOfSomething(const uint64_t & index, const uint64_t & currentRowIndex) {
+    [[nodiscard]] double80_t GetAmountOfSomething(const uint64_t &index, const uint64_t &currentRowIndex) {
         double80_t result = 0.0;
-        for (uint64_t k = 0; k < currentRowIndex; k++) {
-            result += (this->_bottomTriangle->operator[](index)[k]) * (this->_bottomTriangle->operator[](currentRowIndex)[k]) * (this->_diagonalMatrix->operator[](k)[k]);
+        for (uint64_t i = 0; i < currentRowIndex; i++) {
+            result += (this->_bottomTriangle->operator[](index)[i]) *
+                      (this->_bottomTriangle->operator[](currentRowIndex)[i]) *
+                      (this->_diagonalMatrix->operator[](i)[i]);
         }
 
         return result;
     }
 
-    [[nodiscard]] double80_t GetAmountOfSomething1(const uint64_t & currentRowIndex) {
+    [[nodiscard]] double80_t GetAmountOfSomething1(const uint64_t &currentRowIndex) {
         double80_t result = 0.0;
-        for (uint64_t j = 0; j < currentRowIndex; j++) {
-            result += (this->_bottomTriangle->operator[](currentRowIndex)[j]) * (this->_bottomTriangle->operator[](currentRowIndex)[j]) * (this->_diagonalMatrix->operator[](j)[j]);
+        for (uint64_t i = 0; i < currentRowIndex; i++) {
+            result += (this->_bottomTriangle->operator[](currentRowIndex)[i]) *
+                      (this->_bottomTriangle->operator[](currentRowIndex)[i]) *
+                      (this->_diagonalMatrix->operator[](i)[i]);
         }
 
         return result;
+    }
+
+    void CalculateDiagonal(const uint64_t & index) {
+            this->_diagonalMatrix->operator[](index)[index] =
+                    this->_bottomTriangle->operator[](index)[index] - this->GetAmountOfSomething1(index);
+
     }
 
     void CalculateBottomTriangle() {
         for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
-            this->_diagonalMatrix->operator[](i)[i] = this->_bottomTriangle->operator[](i)[i] - this->GetAmountOfSomething1(i);
+            this->CalculateDiagonal(i);
+            this->_bottomTriangle->operator[](i)[i] = 1.0;
 
             for (uint64_t j = i + 1; j < this->GetRowsNumber(); j++) {
-                this->_bottomTriangle->operator[](j)[i] = (this->_bottomTriangle->operator[](j)[i] - this->GetAmountOfSomething(j, i)) / this->_diagonalMatrix->operator[](i)[i];
+                this->_bottomTriangle->operator[](j)[i] =
+                        (this->_bottomTriangle->operator[](j)[i] - this->GetAmountOfSomething(j, i)) /
+                        this->_diagonalMatrix->operator[](i)[i];
             }
         }
     }
 
     void CalculateUpperTriangle() {
         for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
-            this->_bottomTriangle->operator[](i)[i] = 1.0;
-
             for (uint64_t j = 0; j < this->GetRowsNumber(); j++) {
                 this->_upperTriangle->operator[](i)[j] = this->_bottomTriangle->operator[](j)[i];
             }
@@ -78,6 +95,7 @@ public:
     }
 
     void FormMatrices() {
+        this->FormBottomTriangle();
         this->CalculateBottomTriangle();
         this->CalculateUpperTriangle();
     }
@@ -88,6 +106,10 @@ public:
         this->_upperTriangle->Print();
 
         (*this->_bottomTriangle * *this->_diagonalMatrix * *this->_upperTriangle).Print();
+    }
+
+    void FindSolution() {
+        //GaussMatrix ySolution
     }
 
 private:
