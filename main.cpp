@@ -2,7 +2,7 @@
 
 int main() {
     Matrix initialMatrix(3, 4);
-    initialMatrix.ReadFromFile("../matrix.txt");
+    initialMatrix.ReadFromFile("../matrix.prn");
     initialMatrix.Print();
 
     GaussMatrix solvedGaussMatrix(initialMatrix);
