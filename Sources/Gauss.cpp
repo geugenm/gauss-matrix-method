@@ -88,10 +88,22 @@ void GaussMatrix::PrintRoots() const {
 
 void
 GaussMatrix::ReplaceDiagonalElementWithTheMaxInTheColumn(const uint64_t &currentColumn) {
+    const uint64_t lastColumn = this->GetRowsNumber() - 2;
+
+    if (currentColumn == lastColumn) {
+        return;
+    }
+
     const uint64_t maxElementIndex = this->_equationMatrix->GetMaxColumnElementIndex(currentColumn);
+
+    if (maxElementIndex == currentColumn) {
+        return;
+    }
+
     if (maxElementIndex == this->GetColumnsNumber()) {
         throw (std::logic_error("This matrix is degenerate"));
     }
+
     this->_equationMatrix->SwapRows(maxElementIndex, currentColumn);
 }
 

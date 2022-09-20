@@ -1,11 +1,13 @@
 #include "Headers/LdlFactorization.h"
 
 int main() {
-    Matrix initialMatrix(3, 4);
+    Matrix initialMatrix(4, 5);
     initialMatrix.ReadFromFile("../matrix.prn");
     initialMatrix.Print();
 
-    GaussMatrix solvedGaussMatrix(initialMatrix);
+    EquationMatrix equationMatrix(initialMatrix);
+
+    GaussMatrix solvedGaussMatrix(equationMatrix);
     solvedGaussMatrix.Print();
 
     InconsistencyVector inconsistencyVector(solvedGaussMatrix, initialMatrix);
@@ -14,8 +16,11 @@ int main() {
     RelativeError relativeError(inconsistencyVector, initialMatrix);
     relativeError.Print();
 
-    //LdlMatrix ldlMatrix(initialMatrix);
-    //ldlMatrix.Print();
+    if (equationMatrix.GetLeftSide().IsSymmetric()) {
+        std::cout << "\n======LDL AVAILABLE======\n" << std::endl;
+        LdlMatrix ldlMatrix(initialMatrix);
+        ldlMatrix.Print();
+    }
 
     return 0;
 }

@@ -125,9 +125,10 @@ public:
         return upperEquation;
     }
 
-    void Print() const {
+    void Print() {
         GaussMatrix result = this->FindSolution();
 
+        std::cout << std::fixed;
         std::cout.precision(2);
         result.Print();
 
