@@ -69,6 +69,9 @@ uint64_t GaussMatrix::GetColumnsNumber() const {
 // ─── Private Methods ────────────────────────────────────────────────────────────
 
 void GaussMatrix::PrintRoots() const {
+    std::ios oldCoutState(nullptr);
+    oldCoutState.copyfmt(std::cout);
+
     const uint64_t precision = 4;
     const uint64_t width = 7;
 
@@ -79,23 +82,24 @@ void GaussMatrix::PrintRoots() const {
         std::cout << std::setw(width) << this->_roots->operator[](i)[0] << std::endl;
     }
 
+    std::cout.copyfmt(oldCoutState);
     std::cout << std::endl;
 }
 
 void
 GaussMatrix::ReplaceDiagonalElementWithTheMaxInTheColumn(const uint64_t &currentColumn) {
     const uint64_t maxElementIndex = this->_equationMatrix->GetMaxColumnElementIndex(currentColumn);
-    if (maxElementIndex == 0) {
+    if (maxElementIndex == this->GetColumnsNumber()) {
         throw (std::logic_error("This matrix is degenerate"));
     }
     this->_equationMatrix->SwapRows(maxElementIndex, currentColumn);
 }
 
 void GaussMatrix::NullifyLowerElementsFrom(const uint64_t &currentRow) {
-    const uint64_t currentColumn = currentRow - 1;
-    OperableSet subtractionRowsSet = {0, currentRow - 1};
+    const uint64_t currentColumn = currentRow;
+    OperableSet subtractionRowsSet = {0, currentRow};
 
-    for (uint64_t j = currentRow; j < this->GetRowsNumber(); j++) {
+    for (uint64_t j = currentRow + 1; j < this->GetRowsNumber(); j++) {
         const double80_t multiplier = this->_equationMatrix->GetLeftSide()[j][currentColumn];
 
         subtractionRowsSet.modifiableIndex = j;
@@ -119,12 +123,10 @@ void GaussMatrix::FindSolutionFor(const uint64_t &index) {
 }
 
 void GaussMatrix::StraightforwardStroke() {
-    this->PrepareFirstElement();
-
-    for (uint64_t i = 1; i < this->GetRowsNumber(); i++) {
-        this->NullifyLowerElementsFrom(i);
+    for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
         this->ReplaceDiagonalElementWithTheMaxInTheColumn(i);
         this->MakeDiagonalElementOne(i);
+        this->NullifyLowerElementsFrom(i);
     }
 }
 
@@ -137,11 +139,6 @@ void GaussMatrix::ReverseStroke() {
 void GaussMatrix::SolveSystem() {
     this->StraightforwardStroke();
     this->ReverseStroke();
-}
-
-void GaussMatrix::PrepareFirstElement() {
-    this->ReplaceDiagonalElementWithTheMaxInTheColumn(1);
-    this->MakeDiagonalElementOne(1);
 }
 
 Matrix &GaussMatrix::GetRootsMatrix() const {

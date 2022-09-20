@@ -45,8 +45,6 @@ private:
 
     void SolveSystem();
 
-    void PrepareFirstElement();
-
     void PrintRoots() const;
 
 private:

@@ -11,6 +11,7 @@ public:
 
         this->CreateSystem();
         this->SolveTheSystem();
+        this->Calculate();
     }
 
     explicit RelativeError(const InconsistencyVector &inconsistencyVector, const Matrix &initialMatrix) : RelativeError(
@@ -46,6 +47,7 @@ public:
     }
 
     void Print() const {
+        std::cout << std::scientific;
         std::cout << "\nMax relative error is: " << this->_relativeError << std::endl;
     }
 

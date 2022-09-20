@@ -27,10 +27,13 @@ void InconsistencyVector::FindInconsistency() {
 }
 
 void InconsistencyVector::Print() const {
-    const uint64_t precision = 64;
+    std::ios oldCoutState(nullptr);
+    oldCoutState.copyfmt(std::cout);
+
+    const uint64_t precision = 5;
     const uint64_t width = 7;
 
-    std::cout << std::setprecision(precision);
+    std::cout << std::setprecision(precision) << std::scientific;
 
     for (uint64_t i = 0; i < this->_gaussRoots->GetRowsNumber(); i++) {
         std::cout << "Inconsistency for x" << i << ": " << std::setw(width)
@@ -39,6 +42,8 @@ void InconsistencyVector::Print() const {
     }
 
     std::cout << "\nNorm: " << this->_maxAbsoluteInconsistency << std::endl;
+    std::cout.copyfmt(oldCoutState);
+    std::cout << std::endl;
 }
 
 void InconsistencyVector::FindNorm() {
