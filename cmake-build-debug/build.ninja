@@ -195,6 +195,48 @@ build GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/Tests/matrix-test.cpp.obj:
   OBJECT_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir
   OBJECT_FILE_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir\Tests
 
+build GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/__/Sources/Matrix.cpp.obj: CXX_COMPILER__Google_Tests_run_Debug S$:/labs/computational-methods/lab-1/Sources/Matrix.cpp || cmake_object_order_depends_target_Google_Tests_run
+  DEP_FILE = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir\__\Sources\Matrix.cpp.obj.d
+  FLAGS = -g -std=gnu++23
+  INCLUDES = -isystem S:/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest/include -isystem S:/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest
+  OBJECT_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir
+  OBJECT_FILE_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir\__\Sources
+
+build GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/__/Sources/Gauss.cpp.obj: CXX_COMPILER__Google_Tests_run_Debug S$:/labs/computational-methods/lab-1/Sources/Gauss.cpp || cmake_object_order_depends_target_Google_Tests_run
+  DEP_FILE = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir\__\Sources\Gauss.cpp.obj.d
+  FLAGS = -g -std=gnu++23
+  INCLUDES = -isystem S:/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest/include -isystem S:/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest
+  OBJECT_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir
+  OBJECT_FILE_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir\__\Sources
+
+build GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/__/Sources/EquationMatrix.cpp.obj: CXX_COMPILER__Google_Tests_run_Debug S$:/labs/computational-methods/lab-1/Sources/EquationMatrix.cpp || cmake_object_order_depends_target_Google_Tests_run
+  DEP_FILE = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir\__\Sources\EquationMatrix.cpp.obj.d
+  FLAGS = -g -std=gnu++23
+  INCLUDES = -isystem S:/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest/include -isystem S:/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest
+  OBJECT_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir
+  OBJECT_FILE_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir\__\Sources
+
+build GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/__/Sources/InconsistencyVector.cpp.obj: CXX_COMPILER__Google_Tests_run_Debug S$:/labs/computational-methods/lab-1/Sources/InconsistencyVector.cpp || cmake_object_order_depends_target_Google_Tests_run
+  DEP_FILE = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir\__\Sources\InconsistencyVector.cpp.obj.d
+  FLAGS = -g -std=gnu++23
+  INCLUDES = -isystem S:/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest/include -isystem S:/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest
+  OBJECT_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir
+  OBJECT_FILE_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir\__\Sources
+
+build GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/__/Sources/RelativeError.cpp.obj: CXX_COMPILER__Google_Tests_run_Debug S$:/labs/computational-methods/lab-1/Sources/RelativeError.cpp || cmake_object_order_depends_target_Google_Tests_run
+  DEP_FILE = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir\__\Sources\RelativeError.cpp.obj.d
+  FLAGS = -g -std=gnu++23
+  INCLUDES = -isystem S:/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest/include -isystem S:/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest
+  OBJECT_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir
+  OBJECT_FILE_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir\__\Sources
+
+build GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/__/Sources/LdlFactorization.cpp.obj: CXX_COMPILER__Google_Tests_run_Debug S$:/labs/computational-methods/lab-1/Sources/LdlFactorization.cpp || cmake_object_order_depends_target_Google_Tests_run
+  DEP_FILE = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir\__\Sources\LdlFactorization.cpp.obj.d
+  FLAGS = -g -std=gnu++23
+  INCLUDES = -isystem S:/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest/include -isystem S:/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest
+  OBJECT_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir
+  OBJECT_FILE_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir\__\Sources
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Google_Tests_run
@@ -203,7 +245,7 @@ build GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/Tests/matrix-test.cpp.obj:
 #############################################
 # Link the executable GoogleUnitTests\Google_Tests_run.exe
 
-build GoogleUnitTests/Google_Tests_run.exe: CXX_EXECUTABLE_LINKER__Google_Tests_run_Debug GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/Tests/matrix-test.cpp.obj | lib/libgtest.a lib/libgtest_main.a lib/libgtest.a || lib/libgtest.a lib/libgtest_main.a
+build GoogleUnitTests/Google_Tests_run.exe: CXX_EXECUTABLE_LINKER__Google_Tests_run_Debug GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/Tests/matrix-test.cpp.obj GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/__/Sources/Matrix.cpp.obj GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/__/Sources/Gauss.cpp.obj GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/__/Sources/EquationMatrix.cpp.obj GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/__/Sources/InconsistencyVector.cpp.obj GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/__/Sources/RelativeError.cpp.obj GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/__/Sources/LdlFactorization.cpp.obj | lib/libgtest.a lib/libgtest_main.a lib/libgtest.a || lib/libgtest.a lib/libgtest_main.a
   FLAGS = -g
   LINK_LIBRARIES = lib/libgtest.a  lib/libgtest_main.a  lib/libgtest.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = GoogleUnitTests\CMakeFiles\Google_Tests_run.dir

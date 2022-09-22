@@ -1,2 +1,2 @@
-﻿# Empty dependencies file for gtest.
+# Empty dependencies file for gtest.
 # This may be replaced when dependencies are built.

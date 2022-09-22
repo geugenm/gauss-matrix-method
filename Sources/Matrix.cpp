@@ -149,7 +149,7 @@ void Matrix::ReadFromFile(const std::filesystem::path &filePath) {
     for (uint64_t i = 0; i < this->_rows; i++) {
         for (uint64_t j = 0; j < this->_columns; j++) {
             if (!(sourceFile >> this->_data[i][j])) {
-                throw (std::invalid_argument("Matrix file read error. Double data expected."));
+                throw (std::invalid_argument("Matrix file read error. Double data expected (also check if matrix _rows + 1 = _columns."));
             }
         }
     }
@@ -218,7 +218,7 @@ void Matrix::Append(const Matrix &appendSource) {
     this->_columns += appendSource.GetColumnsNumber();
 }
 
-bool Matrix::operator==(const Matrix &comparedTo) {
+bool Matrix::operator==(const Matrix &comparedTo) const {
     const bool haveEqualRowsNumber = this->GetRowsNumber() == comparedTo.GetRowsNumber();
     const bool haveEqualColumnsNumber = this->GetColumnsNumber() == comparedTo.GetColumnsNumber();
 

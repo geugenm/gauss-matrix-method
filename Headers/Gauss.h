@@ -24,6 +24,8 @@ public:
 
     [[nodiscard]] uint64_t GetColumnsNumber() const;
 
+    [[nodiscard]] EquationMatrix GetEquationMatrix() const;
+
     void Print() const;
 
     [[nodiscard]] Matrix & GetRootsMatrix() const;
@@ -31,7 +33,7 @@ public:
     ~GaussMatrix() = default;
 
 private:
-    void ReplaceDiagonalElementWithTheMaxInTheColumn(const uint64_t &currentColumn);
+    void SwapRowToMaxInTheColumn(const uint64_t &currentColumn);
 
     void NullifyLowerElementsFrom(const uint64_t &currentRow);
 

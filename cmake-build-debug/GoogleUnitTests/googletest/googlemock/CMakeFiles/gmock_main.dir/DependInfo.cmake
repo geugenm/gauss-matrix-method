@@ -8,13 +8,13 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/gmich/repos/lab-1-Gauss/GoogleUnitTests/googletest/googletest/src/gtest-all.cc" "GoogleUnitTests/googletest/googlemock/CMakeFiles/gmock_main.dir/__/googletest/src/gtest-all.cc.obj" "msvc" "GoogleUnitTests/googletest/googlemock/CMakeFiles/gmock_main.dir/__/googletest/src/gtest-all.cc.obj.d"
-  "C:/Users/gmich/repos/lab-1-Gauss/GoogleUnitTests/googletest/googlemock/src/gmock-all.cc" "GoogleUnitTests/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock-all.cc.obj" "msvc" "GoogleUnitTests/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock-all.cc.obj.d"
-  "C:/Users/gmich/repos/lab-1-Gauss/GoogleUnitTests/googletest/googlemock/src/gmock_main.cc" "GoogleUnitTests/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.obj" "msvc" "GoogleUnitTests/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.obj.d"
+  "/mnt/s/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googlemock/src/gmock_main.cc" "GoogleUnitTests/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o" "gcc" "GoogleUnitTests/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o.d"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
+  "/mnt/s/labs/computational-methods/lab-1/cmake-build-debug/GoogleUnitTests/googletest/googlemock/CMakeFiles/gmock.dir/DependInfo.cmake"
+  "/mnt/s/labs/computational-methods/lab-1/cmake-build-debug/GoogleUnitTests/googletest/googletest/CMakeFiles/gtest.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

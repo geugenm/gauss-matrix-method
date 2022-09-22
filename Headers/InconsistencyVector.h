@@ -11,6 +11,8 @@ public:
 
     explicit InconsistencyVector(const GaussMatrix &gaussMatrix, const Matrix &matrix);
 
+    [[nodiscard]] double80_t GetMaxAbsoluteInconsistency() const;
+
     void Print() const;
 
     [[nodiscard]] Matrix GetRootsMatrix() const;

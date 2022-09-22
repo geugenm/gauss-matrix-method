@@ -1,30 +1,32 @@
 #include "gtest/gtest.h"
-#include "../../Headers/Matrix.h"
-#include "../../Headers/Gauss.h"
-#include "../../Headers/InconsistencyVector.h"
-#include "../../Headers/RelativeError.h"
+#include "../../Headers/LdlFactorization.h"
 
-class MatrixTest : public ::testing::Test {
-public:
-    MatrixTest() {
-        // initialization;
-        // can also be done in SetUp()
+TEST(MatrixTestLdl, test1) {
+    Matrix initialMatrix(15, 15);
+    initialMatrix.RandomSymmetricInit(-100.0, 100.0);
+
+    Matrix equationPart(initialMatrix.GetRowsNumber(), 1);
+    equationPart.RandomInit(-100.0, 100.0);
+
+    initialMatrix.Append(equationPart);
+
+    EquationMatrix equationMatrix(initialMatrix);
+
+    GaussMatrix solvedGaussMatrix(equationMatrix);
+
+    InconsistencyVector inconsistencyVector(solvedGaussMatrix, initialMatrix);
+
+    const bool isAdequateInconsistency = inconsistencyVector.GetMaxAbsoluteInconsistency() <= 1e-10;
+    ASSERT_TRUE(isAdequateInconsistency);
+
+    RelativeError relativeError(inconsistencyVector, initialMatrix);
+
+    if (equationMatrix.GetLeftSide().IsSymmetric()) {
+        LdlMatrix ldlMatrix(initialMatrix);
     }
+}
 
-    void SetUp() {
-        // initialization or some code to run before each test
-        ASSERT_FALSE(false);
-    }
-
-    void TearDown() {
-        // code to run after each test;
-        // can be used instead of a destructor,
-        // but exceptions can be handled in this function only
-    }
-
-    ~MatrixTest() {
-        //resources cleanup, no exceptions allowed
-    }
-
-    // shared user data
-};
+int main() {
+    ::testing::InitGoogleTest();
+    return RUN_ALL_TESTS();
+}

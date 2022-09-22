@@ -3,12 +3,22 @@
 
 // ─── Constructors Section ───────────────────────────────────────────────────────
 
+/**
+ * A copy constructor.
+ *
+ * @param source The GaussMatrix object to be copied.
+ */
 GaussMatrix::GaussMatrix(const GaussMatrix &source) {
     this->_equationMatrix = std::make_shared<EquationMatrix>(*source._equationMatrix);
     this->_roots = std::make_shared<Matrix>(*source._roots);
     this->SolveSystem();
 }
 
+/**
+ * A constructor that takes in a reference to an EquationMatrix object and creates a GaussMatrix object.
+ *
+ * @param source The matrix to be copied.
+ */
 GaussMatrix::GaussMatrix(const EquationMatrix &source) {
     if (source.IsEmpty()) {
         throw (std::invalid_argument("EquationMatrix matrix for Gauss is empty"));
@@ -51,6 +61,9 @@ GaussMatrix &GaussMatrix::operator=(const GaussMatrix &source) {
 
 // ─── Public Methods ─────────────────────────────────────────────────────────────
 
+/**
+ * Prints the matrix and its roots to the screen.
+ */
 void GaussMatrix::Print() const {
     this->_equationMatrix->Print();
 
@@ -65,9 +78,19 @@ uint64_t GaussMatrix::GetColumnsNumber() const {
     return this->_equationMatrix->GetColumnsNumber();
 }
 
+/**
+ * It returns the equation matrix.
+ */
+EquationMatrix GaussMatrix::GetEquationMatrix() const {
+    return *this->_equationMatrix;
+}
+
 
 // ─── Private Methods ────────────────────────────────────────────────────────────
 
+/**
+ * Prints the roots of the equation.
+ */
 void GaussMatrix::PrintRoots() const {
     std::ios oldCoutState(nullptr);
     oldCoutState.copyfmt(std::cout);
@@ -86,8 +109,14 @@ void GaussMatrix::PrintRoots() const {
     std::cout << std::endl;
 }
 
-void
-GaussMatrix::ReplaceDiagonalElementWithTheMaxInTheColumn(const uint64_t &currentColumn) {
+
+/**
+ * Replace the diagonal element with the max in the column.
+ *
+ * @param currentColumn The column number of the matrix that we want to replace the diagonal element with the max in the
+ * column.
+ */
+void GaussMatrix::SwapRowToMaxInTheColumn(const uint64_t &currentColumn) {
     const uint64_t lastColumn = this->GetRowsNumber() - 2;
 
     if (currentColumn == lastColumn) {
@@ -96,17 +125,18 @@ GaussMatrix::ReplaceDiagonalElementWithTheMaxInTheColumn(const uint64_t &current
 
     const uint64_t maxElementIndex = this->_equationMatrix->GetMaxColumnElementIndex(currentColumn);
 
-    if (maxElementIndex == currentColumn) {
-        return;
+    if (maxElementIndex >= this->GetColumnsNumber()) {
+        throw (std::logic_error("This matrix is degenerate"));
     }
 
-    if (maxElementIndex == this->GetColumnsNumber()) {
-        throw (std::logic_error("This matrix is degenerate"));
+    if (maxElementIndex == currentColumn) {
+        return;
     }
 
     this->_equationMatrix->SwapRows(maxElementIndex, currentColumn);
 }
 
+/* Nullifying the lower elements from the current row. */
 void GaussMatrix::NullifyLowerElementsFrom(const uint64_t &currentRow) {
     const uint64_t currentColumn = currentRow;
     OperableSet subtractionRowsSet = {0, currentRow};
@@ -136,7 +166,7 @@ void GaussMatrix::FindSolutionFor(const uint64_t &index) {
 
 void GaussMatrix::StraightforwardStroke() {
     for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
-        this->ReplaceDiagonalElementWithTheMaxInTheColumn(i);
+        this->SwapRowToMaxInTheColumn(i);
         this->MakeDiagonalElementOne(i);
         this->NullifyLowerElementsFrom(i);
     }

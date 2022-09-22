@@ -4,140 +4,50 @@
 
 /// Theoretical taken from LiveJournal
 /// @see https://nabbla1.livejournal.com/245822.html?ysclid=l86e2zh5w1833261875
+/// Also there is an additional theoretical source
+/// @see https://arxiv.org/pdf/1505.07589v1.pdf
 
 
 class LdlMatrix {
 public:
-    explicit LdlMatrix(const EquationMatrix &equationMatrix) {
-        if (!equationMatrix.GetLeftSide().IsSymmetric()) {
-            throw (std::invalid_argument("Matrix should be symmetric in order to proceed LDL factorization"));
-        }
+    // ─── Constructors Section ───────────────────────────────────────────────────────
+    explicit LdlMatrix(const EquationMatrix &equationMatrix);
 
-        this->_equation = std::make_shared<EquationMatrix>(equationMatrix);
+    explicit LdlMatrix(const Matrix &matrix);
 
-        this->_bottomTriangle = std::make_shared<Matrix>(equationMatrix.GetLeftSide());
+    // ─── Public Methods ─────────────────────────────────────────────────────────────
+    [[nodiscard]] uint64_t GetRowsNumber() const;
 
-        this->_diagonalMatrix = std::make_shared<Matrix>(equationMatrix.GetLeftSide());
-        this->_diagonalMatrix->Nullify();
+    [[nodiscard]] uint64_t GetColumnsNumber() const;
 
-        this->_upperTriangle = std::make_shared<Matrix>(equationMatrix.GetLeftSide());
-        this->_upperTriangle->Nullify();
+    [[nodiscard]] GaussMatrix GetSolution() const;
 
-        this->FormMatrices();
-    }
+    [[nodiscard]] Matrix GetLdltMatrix() const;
 
-    explicit LdlMatrix(const Matrix &matrix) : LdlMatrix(*std::make_unique<EquationMatrix>(matrix)) {
-    }
+    void Print() const;
 
-    [[nodiscard]] uint64_t GetRowsNumber() const {
-        return this->_equation->GetLeftSide().GetRowsNumber();
-    }
+    ~LdlMatrix() = default;
 
-    [[nodiscard]] uint64_t GetColumnsNumber() const {
-        return this->_equation->GetLeftSide().GetColumnsNumber();
-    }
+private:
+    void FormBottomTriangle();
 
-    void FormBottomTriangle() {
-        for (uint64_t i = 0; i < this->GetRowsNumber() - 1; i++) {
-            for (uint64_t j = i + 1; j < this->GetColumnsNumber(); j++) {
-                this->_bottomTriangle->operator[](i)[j] = 0.0;
-            }
-        }
-    }
+    [[nodiscard]] double80_t GetAmountOfSomething(const uint64_t &index, const uint64_t &currentRowIndex);
 
-    [[nodiscard]] double80_t GetAmountOfSomething(const uint64_t &index, const uint64_t &currentRowIndex) {
-        double80_t result = 0.0;
-        for (uint64_t i = 0; i < currentRowIndex; i++) {
-            result += (this->_bottomTriangle->operator[](index)[i]) *
-                      (this->_bottomTriangle->operator[](currentRowIndex)[i]) *
-                      (this->_diagonalMatrix->operator[](i)[i]);
-        }
+    [[nodiscard]] double80_t GetAmountOfSomething1(const uint64_t &currentRowIndex);
 
-        return result;
-    }
+    [[nodiscard]] GaussMatrix GetSolvedBottomEquation() const;
 
-    [[nodiscard]] double80_t GetAmountOfSomething1(const uint64_t &currentRowIndex) {
-        double80_t result = 0.0;
-        for (uint64_t i = 0; i < currentRowIndex; i++) {
-            result += (this->_bottomTriangle->operator[](currentRowIndex)[i]) *
-                      (this->_bottomTriangle->operator[](currentRowIndex)[i]) *
-                      (this->_diagonalMatrix->operator[](i)[i]);
-        }
+    [[nodiscard]] GaussMatrix GetSolvedDiagonalEquation(const GaussMatrix & solvedBottomEquation) const;
 
-        return result;
-    }
+    [[nodiscard]] GaussMatrix GetSolvedUpperEquation(const GaussMatrix & solvedDiagonalEquation) const;
 
-    void CalculateDiagonal(const uint64_t & index) {
-            this->_diagonalMatrix->operator[](index)[index] =
-                    this->_bottomTriangle->operator[](index)[index] - this->GetAmountOfSomething1(index);
+    void CalculateDiagonal(const uint64_t & index);
 
-    }
+    void CalculateBottomTriangle();
 
-    void CalculateBottomTriangle() {
-        for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
-            this->CalculateDiagonal(i);
-            this->_bottomTriangle->operator[](i)[i] = 1.0;
+    void CalculateUpperTriangle();
 
-            for (uint64_t j = i + 1; j < this->GetRowsNumber(); j++) {
-                this->_bottomTriangle->operator[](j)[i] =
-                        (this->_bottomTriangle->operator[](j)[i] - this->GetAmountOfSomething(j, i)) /
-                        this->_diagonalMatrix->operator[](i)[i];
-            }
-        }
-    }
-
-    void CalculateUpperTriangle() {
-        this->_upperTriangle = std::make_shared<Matrix>(this->_bottomTriangle->GetTransposed());
-    }
-
-    void FormMatrices() {
-        this->FormBottomTriangle();
-        this->CalculateBottomTriangle();
-        this->CalculateUpperTriangle();
-    }
-
-    [[nodiscard]] GaussMatrix SolveBottomEquation() const {
-        Matrix equation = *this->_bottomTriangle;
-        equation.Append(this->_equation->GetRightSide());
-
-        return GaussMatrix(equation);
-    }
-
-    [[nodiscard]] GaussMatrix SolveDiagonalEquation(const GaussMatrix & solvedBottomEquation) const {
-        Matrix diagonalMatrixEquation = *this->_diagonalMatrix;
-        diagonalMatrixEquation.Append(solvedBottomEquation.GetRootsMatrix());
-
-        return GaussMatrix(diagonalMatrixEquation);
-    }
-
-    [[nodiscard]] GaussMatrix SolveUpperEquation(const GaussMatrix & solvedDiagonalEquation) const {
-        Matrix upperTriangleMatrixEquation = *this->_upperTriangle;
-        upperTriangleMatrixEquation.Append(solvedDiagonalEquation.GetRootsMatrix());
-
-        return GaussMatrix(upperTriangleMatrixEquation);
-    }
-
-    [[nodiscard]] GaussMatrix FindSolution() const {
-        GaussMatrix bottomEquation = this->SolveBottomEquation();
-        GaussMatrix diagonalEquation = this->SolveDiagonalEquation(bottomEquation);
-        GaussMatrix upperEquation = this->SolveUpperEquation(diagonalEquation);
-
-        return upperEquation;
-    }
-
-    void Print() {
-        GaussMatrix result = this->FindSolution();
-
-        std::cout << std::fixed;
-        std::cout.precision(2);
-        result.Print();
-
-        InconsistencyVector inconsistencyVector(result, *this->_equation);
-        inconsistencyVector.Print();
-
-        RelativeError relativeError(inconsistencyVector, *this->_equation);
-        relativeError.Print();
-    }
+    void FormMatrices();
 
 private:
     std::shared_ptr<Matrix> _bottomTriangle;

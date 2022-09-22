@@ -1,8 +1,7 @@
 #include "Headers/LdlFactorization.h"
 
 int main() {
-    Matrix initialMatrix(4, 5);
-    initialMatrix.ReadFromFile("../matrix.prn");
+    Matrix initialMatrix("../matrix.prn");
     initialMatrix.Print();
 
     EquationMatrix equationMatrix(initialMatrix);

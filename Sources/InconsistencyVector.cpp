@@ -59,3 +59,7 @@ void InconsistencyVector::CalculateInconsistency() {
 Matrix InconsistencyVector::GetRootsMatrix() const {
     return *this->_gaussRoots;
 }
+
+double80_t InconsistencyVector::GetMaxAbsoluteInconsistency() const {
+    return this->_maxAbsoluteInconsistency;
+}

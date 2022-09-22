@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/gmich/repos/lab-1-Gauss/GoogleUnitTests/googletest/googletest/src/gtest-all.cc" "GoogleUnitTests/googletest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.obj" "msvc" "GoogleUnitTests/googletest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.obj.d"
+  "/mnt/s/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest/src/gtest-all.cc" "GoogleUnitTests/googletest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o" "gcc" "GoogleUnitTests/googletest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o.d"
   )
 
 # Targets to which this target links.
