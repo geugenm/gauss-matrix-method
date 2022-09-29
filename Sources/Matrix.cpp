@@ -227,6 +227,9 @@ bool Matrix::operator==(const Matrix &comparedTo) const {
     return (haveEqualColumnsNumber && haveEqualRowsNumber && haveEqualData);
 }
 
+/**
+ *
+ */
 Matrix Matrix::GetTransposed() const {
     if (this->GetColumnsNumber() != this->GetRowsNumber()) {
         throw (std::logic_error("Unable to transpose matrix: columns != rows"));
@@ -275,4 +278,58 @@ Matrix::Matrix() : Matrix(3, 4) {
     this->_data[2][0] = - 2.0 * patternBeta;
     this->_data[2][1] = patternPhi + patternOmega;
     this->_data[2][2] = patternPhi - patternOmega;
+}
+
+Matrix::Matrix(const std::filesystem::path &filePath) {
+    if (!exists(filePath)) {
+        throw (std::invalid_argument("Invalid matrix file path given"));
+    }
+    std::string line;
+
+    std::ifstream inFile(filePath);
+    if (inFile.bad()) {
+        throw (std::ios_base::failure("Unknown Stream error occurred"));
+    }
+
+    this->_rows = std::count(std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>(), '\n') + 1;
+
+    inFile.clear();
+    inFile.seekg(0, std::ios::beg);
+    getline(inFile, line);
+
+    this->_columns = std::ranges::count_if( line.begin(), line.end(), []( char c ){return c == ' ';}) + 1;
+    inFile.close();
+
+    this->InitVector(this->_rows, this->_columns);
+    this->ReadFromFile(filePath);
+}
+
+void Matrix::RandomSymmetricInit(const double80_t &minRandom, const double80_t &maxRandom) {
+    std::random_device randomDevice;
+    std::mt19937 generate(randomDevice());
+    std::uniform_real_distribution<double80_t> distribution(minRandom, maxRandom);
+
+    for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
+        for (uint64_t j = 0; j <= i; j++) {
+            this->_data[i][j] = distribution(generate);
+        }
+    }
+
+    *this = *this + this->GetTransposed();
+}
+
+void Matrix::Nullify() {
+    for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
+        for (uint64_t j = 0; j < this->GetColumnsNumber(); j++) {
+            this->operator[](i)[j] = 0.0;
+        }
+    }
+}
+
+void Matrix::InitVector(const uint64_t &rows, const uint64_t &columns) {
+    this->_data.resize(rows);
+
+    for (uint64_t i = 0; i < rows; i++) {
+        this->_data[i].resize(columns);
+    }
 }

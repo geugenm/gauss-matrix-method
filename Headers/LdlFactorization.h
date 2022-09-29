@@ -31,9 +31,9 @@ public:
 private:
     void FormBottomTriangle();
 
-    [[nodiscard]] double80_t GetAmountOfSomething(const uint64_t &index, const uint64_t &currentRowIndex);
+    [[nodiscard]] double80_t GetBottomRowSum(const uint64_t &index, const uint64_t &currentRowIndex);
 
-    [[nodiscard]] double80_t GetAmountOfSomething1(const uint64_t &currentRowIndex);
+    [[nodiscard]] double80_t GetDiagonalRowSum(const uint64_t &currentRowIndex);
 
     [[nodiscard]] GaussMatrix GetSolvedBottomEquation() const;
 

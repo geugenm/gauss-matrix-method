@@ -64,7 +64,7 @@ void LdlMatrix::FormBottomTriangle() {
     }
 }
 
-double80_t LdlMatrix::GetAmountOfSomething(const uint64_t &index, const uint64_t &currentRowIndex) {
+double80_t LdlMatrix::GetBottomRowSum(const uint64_t &index, const uint64_t &currentRowIndex) {
     double80_t result = 0.0;
     for (uint64_t i = 0; i < currentRowIndex; i++) {
         result += (this->_bottomTriangle->operator[](index)[i]) *
@@ -75,7 +75,7 @@ double80_t LdlMatrix::GetAmountOfSomething(const uint64_t &index, const uint64_t
     return result;
 }
 
-double80_t LdlMatrix::GetAmountOfSomething1(const uint64_t &currentRowIndex) {
+double80_t LdlMatrix::GetDiagonalRowSum(const uint64_t &currentRowIndex) {
     double80_t result = 0.0;
     for (uint64_t i = 0; i < currentRowIndex; i++) {
         result += (this->_bottomTriangle->operator[](currentRowIndex)[i]) *
@@ -88,7 +88,7 @@ double80_t LdlMatrix::GetAmountOfSomething1(const uint64_t &currentRowIndex) {
 
 void LdlMatrix::CalculateDiagonal(const uint64_t &index) {
     this->_diagonalMatrix->operator[](index)[index] =
-            this->_bottomTriangle->operator[](index)[index] - this->GetAmountOfSomething1(index);
+            this->_bottomTriangle->operator[](index)[index] - this->GetDiagonalRowSum(index);
 
 }
 
@@ -99,7 +99,7 @@ void LdlMatrix::CalculateBottomTriangle() {
 
         for (uint64_t j = i + 1; j < this->GetRowsNumber(); j++) {
             this->_bottomTriangle->operator[](j)[i] =
-                    (this->_bottomTriangle->operator[](j)[i] - this->GetAmountOfSomething(j, i)) /
+                    (this->_bottomTriangle->operator[](j)[i] - this->GetBottomRowSum(j, i)) /
                     this->_diagonalMatrix->operator[](i)[i];
         }
     }

@@ -1,5 +1,6 @@
 #include "../headers/InconsistencyVector.h"
 
+/* A constructor. */
 InconsistencyVector::InconsistencyVector(const GaussMatrix &gaussMatrix, const EquationMatrix &matrix)
         : _maxAbsoluteInconsistency(0.0) {
     this->_gaussRoots = std::make_unique<Matrix>(gaussMatrix.GetRootsMatrix());
@@ -26,6 +27,9 @@ void InconsistencyVector::FindInconsistency() {
             this->_initialMatrix->GetLeftSide() * (*this->_gaussRoots) - this->_initialMatrix->GetRightSide());
 }
 
+/**
+ * Prints the inconsistency vector.
+ */
 void InconsistencyVector::Print() const {
     std::ios oldCoutState(nullptr);
     oldCoutState.copyfmt(std::cout);
@@ -60,6 +64,9 @@ Matrix InconsistencyVector::GetRootsMatrix() const {
     return *this->_gaussRoots;
 }
 
+/**
+ * It returns the maximum absolute inconsistency of the vector.
+ */
 double80_t InconsistencyVector::GetMaxAbsoluteInconsistency() const {
     return this->_maxAbsoluteInconsistency;
 }

@@ -4,12 +4,15 @@
 
 class EquationMatrix {
 public:
+    // ─── Constructors Section ───────────────────────────────────────────────────────
     explicit EquationMatrix(const Matrix &matrix);
 
     EquationMatrix(const EquationMatrix &source);
 
+    // ─── Operators ──────────────────────────────────────────────────────────────────
     EquationMatrix &operator=(const EquationMatrix &source);
 
+    // ─── Public Methods ─────────────────────────────────────────────────────────────
     void SumRows(const OperableSet &sumSet);
 
     void SubtractRows(const OperableSet &subtractionSet);

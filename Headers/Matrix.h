@@ -44,50 +44,16 @@ private:
 
 class Matrix {
 public:
+    // ─── Constructors Section ───────────────────────────────────────────────────────
     explicit Matrix(const uint64_t &rows, const uint64_t &columns);
 
     explicit Matrix();
 
     Matrix(const Matrix &source);
 
-    explicit Matrix(const std::filesystem::path &filePath) {
-        if (!exists(filePath)) {
-            throw (std::invalid_argument("Invalid matrix file path given"));
-        }
-        std::string line;
+    explicit Matrix(const std::filesystem::path &filePath);
 
-        std::ifstream inFile(filePath);
-        if (inFile.bad()) {
-            throw (std::ios_base::failure("Unknown Stream error occurred"));
-        }
-
-        this->_rows = std::count(std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>(), '\n') + 1;
-
-        inFile.clear();
-        inFile.seekg(0, std::ios::beg);
-        getline(inFile, line);
-
-        this->_columns = std::ranges::count_if( line.begin(), line.end(), []( char c ){return c == ' ';}) + 1;
-        inFile.close();
-
-        this->InitVector(this->_rows, this->_columns);
-        this->ReadFromFile(filePath);
-    }
-
-    void RandomSymmetricInit(const double80_t &minRandom, const double80_t &maxRandom) {
-        std::random_device randomDevice;
-        std::mt19937 generate(randomDevice());
-        std::uniform_real_distribution<double80_t> distribution(minRandom, maxRandom);
-
-        for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
-            for (uint64_t j = 0; j <= i; j++) {
-                this->_data[i][j] = distribution(generate);
-            }
-        }
-
-        *this = *this + this->GetTransposed();
-    }
-
+    // ─── Operators ──────────────────────────────────────────────────────────────────
     Matrix &operator=(const Matrix &source);
 
     Matrix operator*(const Matrix &multiplier) const;
@@ -98,23 +64,14 @@ public:
 
     bool operator==(const Matrix &comparedTo) const;
 
+    // ─── Public Methods ─────────────────────────────────────────────────────────────
+    void RandomSymmetricInit(const double80_t &minRandom, const double80_t &maxRandom);
+
     void Append(const Matrix &appendSource);
 
-    void Nullify() {
-        for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
-            for (uint64_t j = 0; j < this->GetColumnsNumber(); j++) {
-                this->operator[](i)[j] = 0.0;
-            }
-        }
-    }
+    void Nullify();
 
-    void InitVector(const uint64_t & rows, const uint64_t & columns) {
-        this->_data.resize(rows);
-
-        for (uint64_t i = 0; i < rows; i++) {
-            this->_data[i].resize(columns);
-        }
-    }
+    void InitVector(const uint64_t & rows, const uint64_t & columns);
 
     void ReadFromFile(const std::filesystem::path &filePath);
 
