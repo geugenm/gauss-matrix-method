@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/lab_1.dir/main.cpp.o CMakeFiles/lab_1.dir/Sources/Matrix.cpp.o CMakeFiles/lab_1.dir/Sources/Gauss.cpp.o CMakeFiles/lab_1.dir/Sources/EquationMatrix.cpp.o CMakeFiles/lab_1.dir/Sources/InconsistencyVector.cpp.o CMakeFiles/lab_1.dir/Sources/RelativeError.cpp.o CMakeFiles/lab_1.dir/Sources/LdlFactorization.cpp.o -o lab_1 
