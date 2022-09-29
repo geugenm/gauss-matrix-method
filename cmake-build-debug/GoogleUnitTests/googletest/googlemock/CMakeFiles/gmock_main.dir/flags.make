@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -isystem /mnt/s/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googlemock/include -isystem /mnt/s/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googlemock -isystem /mnt/s/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest/include -isystem /mnt/s/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest
 
-CXX_FLAGS = -g -fdiagnostics-color=always -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++23
+CXX_FLAGS = -g -fdiagnostics-color=always -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++2a
 

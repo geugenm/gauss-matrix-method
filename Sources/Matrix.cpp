@@ -68,7 +68,7 @@ uint64_t Matrix::GetMaxColumnElementIndex(const uint64_t &columnIndex) const {
         columnVector[i] = this->operator[](i)[columnIndex];
     }
 
-    auto it = std::max_element(columnVector.begin(), columnVector.end(),
+    auto it = std::ranges::max_element(columnVector.begin(), columnVector.end(),
                                [](double80_t a, double80_t b) { return std::fabs(a) < std::fabs(b); });
 
     return (std::distance(columnVector.begin(), it));

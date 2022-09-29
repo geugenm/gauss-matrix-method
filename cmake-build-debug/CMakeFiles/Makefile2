@@ -45,10 +45,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /usr/local/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E rm -f
+RM = /usr/local/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -174,8 +174,8 @@ CMakeFiles/lab_1.dir/clean:
 # Target rules for target GoogleUnitTests/CMakeFiles/Google_Tests_run.dir
 
 # All Build rule for target.
-GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/all: GoogleUnitTests/googletest/googletest/CMakeFiles/gtest.dir/all
 GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/all: GoogleUnitTests/googletest/googletest/CMakeFiles/gtest_main.dir/all
+GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/all: GoogleUnitTests/googletest/googletest/CMakeFiles/gtest.dir/all
 	$(MAKE) $(MAKESILENT) -f GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/build.make GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/depend
 	$(MAKE) $(MAKESILENT) -f GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/build.make GoogleUnitTests/CMakeFiles/Google_Tests_run.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/s/labs/computational-methods/lab-1/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target Google_Tests_run"

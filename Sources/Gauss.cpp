@@ -117,7 +117,7 @@ void GaussMatrix::PrintRoots() const {
  * column.
  */
 void GaussMatrix::SwapRowToMaxInTheColumn(const uint64_t &currentColumn) {
-    const uint64_t lastColumn = this->GetRowsNumber() - 2;
+    const uint64_t lastColumn = this->_equationMatrix->GetRightSide().GetColumnsNumber() - 1;
 
     if (currentColumn == lastColumn) {
         return;
@@ -127,10 +127,6 @@ void GaussMatrix::SwapRowToMaxInTheColumn(const uint64_t &currentColumn) {
 
     if (maxElementIndex >= this->GetColumnsNumber()) {
         throw (std::logic_error("This matrix is degenerate"));
-    }
-
-    if (maxElementIndex == currentColumn) {
-        return;
     }
 
     this->_equationMatrix->SwapRows(maxElementIndex, currentColumn);
@@ -166,9 +162,9 @@ void GaussMatrix::FindSolutionFor(const uint64_t &index) {
 
 void GaussMatrix::StraightforwardStroke() {
     for (uint64_t i = 0; i < this->GetRowsNumber(); i++) {
+        this->NullifyLowerElementsFrom(i);
         this->SwapRowToMaxInTheColumn(i);
         this->MakeDiagonalElementOne(i);
-        this->NullifyLowerElementsFrom(i);
     }
 }
 

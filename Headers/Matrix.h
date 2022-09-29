@@ -66,9 +66,8 @@ public:
         inFile.clear();
         inFile.seekg(0, std::ios::beg);
         getline(inFile, line);
-        std::cout << line;
 
-        this->_columns = std::count_if( line.begin(), line.end(), []( char c ){return c == ' ';}) + 1;
+        this->_columns = std::ranges::count_if( line.begin(), line.end(), []( char c ){return c == ' ';}) + 1;
         inFile.close();
 
         this->InitVector(this->_rows, this->_columns);

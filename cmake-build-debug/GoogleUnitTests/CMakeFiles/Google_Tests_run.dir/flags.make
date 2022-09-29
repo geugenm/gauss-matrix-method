@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -isystem /mnt/s/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest/include -isystem /mnt/s/labs/computational-methods/lab-1/GoogleUnitTests/googletest/googletest
 
-CXX_FLAGS = -g -fdiagnostics-color=always -std=gnu++23
+CXX_FLAGS = -g -fdiagnostics-color=always -std=gnu++2a
 
