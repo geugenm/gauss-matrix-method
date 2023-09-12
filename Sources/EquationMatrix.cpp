@@ -38,22 +38,22 @@ EquationMatrix &EquationMatrix::operator=(const EquationMatrix &source) {
     return *this;
 }
 
-void EquationMatrix::SumRows(const OperableSet &sumSet) {
+void EquationMatrix::SumRows(OperableSet sumSet) {
     this->_leftSide->SumRows(sumSet);
     this->_rightSide->SumRows(sumSet);
 }
 
-void EquationMatrix::SubtractRows(const OperableSet &subtractionSet) {
+void EquationMatrix::SubtractRows(OperableSet subtractionSet) {
     this->_leftSide->SubtractRows(subtractionSet);
     this->_rightSide->SubtractRows(subtractionSet);
 }
 
-void EquationMatrix::MultiplyRow(const uint64_t &targetRowIndex, const double80_t &multiplier) {
+void EquationMatrix::MultiplyRow(uint64_t targetRowIndex, double80_t multiplier) {
     this->_leftSide->MultiplyRow(targetRowIndex, multiplier);
     this->_rightSide->MultiplyRow(targetRowIndex, multiplier);
 }
 
-void EquationMatrix::SubtractMultipliedRow(const OperableSet &subtractionSet, const double80_t &multiplier) {
+void EquationMatrix::SubtractMultipliedRow(OperableSet subtractionSet, double80_t multiplier) {
     this->_leftSide->SubtractMultipliedRow(subtractionSet, multiplier);
     this->_rightSide->SubtractMultipliedRow(subtractionSet, multiplier);
 }

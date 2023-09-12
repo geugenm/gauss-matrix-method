@@ -13,13 +13,13 @@ public:
     EquationMatrix &operator=(const EquationMatrix &source);
 
     // ─── Public Methods ─────────────────────────────────────────────────────────────
-    void SumRows(const OperableSet &sumSet);
+    void SumRows(OperableSet sumSet);
 
-    void SubtractRows(const OperableSet &subtractionSet);
+    void SubtractRows(OperableSet subtractionSet);
 
-    void MultiplyRow(const uint64_t &targetRowIndex, const double80_t &multiplier);
+    void MultiplyRow(uint64_t targetRowIndex, double80_t multiplier);
 
-    void SubtractMultipliedRow(const OperableSet &subtractionSet, const double80_t &multiplier);
+    void SubtractMultipliedRow(OperableSet subtractionSet, double80_t multiplier);
 
     [[nodiscard]] uint64_t GetMaxColumnElementIndex(const uint64_t &columnIndex) const;
 

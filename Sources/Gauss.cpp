@@ -38,14 +38,14 @@ GaussMatrix::GaussMatrix(const Matrix &source) : GaussMatrix(*std::make_shared<E
 
 // ─── Operators ──────────────────────────────────────────────────────────────────
 
-std::vector<double80_t> &GaussMatrix::operator[](const uint64_t &index) {
+std::vector<double80_t> &GaussMatrix::operator[](uint64_t index) {
     if (index >= this->GetRowsNumber()) {
         throw (std::out_of_range("Gauss root index out of range"));
     }
     return this->_equationMatrix->GetRowByIndex(index);
 }
 
-std::vector<double80_t> const &GaussMatrix::operator[](const uint64_t &index) const {
+std::vector<double80_t> const &GaussMatrix::operator[](uint64_t index) const {
     if (index >= this->GetRowsNumber()) {
         throw (std::out_of_range("Gauss root index out of range"));
     }
@@ -116,7 +116,7 @@ void GaussMatrix::PrintRoots() const {
  * @param currentColumn The column number of the matrix that we want to replace the diagonal element with the max in the
  * column.
  */
-void GaussMatrix::SwapRowToMaxInTheColumn(const uint64_t &currentColumn) {
+void GaussMatrix::SwapRowToMaxInTheColumn(uint64_t currentColumn) {
     const uint64_t lastColumn = this->_equationMatrix->GetRightSide().GetColumnsNumber() - 1;
 
     if (currentColumn == lastColumn) {
@@ -133,7 +133,7 @@ void GaussMatrix::SwapRowToMaxInTheColumn(const uint64_t &currentColumn) {
 }
 
 /* Nullifying the lower elements from the current row. */
-void GaussMatrix::NullifyLowerElementsFrom(const uint64_t &currentRow) {
+void GaussMatrix::NullifyLowerElementsFrom(uint64_t currentRow) {
     const uint64_t currentColumn = currentRow;
     OperableSet subtractionRowsSet = {0, currentRow};
 
@@ -145,12 +145,12 @@ void GaussMatrix::NullifyLowerElementsFrom(const uint64_t &currentRow) {
     }
 }
 
-void GaussMatrix::MakeDiagonalElementOne(const uint64_t &currentRow) {
+void GaussMatrix::MakeDiagonalElementOne(uint64_t currentRow) {
     const double80_t diagonalElement = this->_equationMatrix->GetLeftSide()[currentRow][currentRow];
-    this->_equationMatrix->MultiplyRow(currentRow, 1 / diagonalElement);
+    this->_equationMatrix->MultiplyRow(currentRow, static_cast<double80_t>(1) / static_cast<double80_t>(diagonalElement));
 }
 
-void GaussMatrix::FindSolutionFor(const uint64_t &index) {
+void GaussMatrix::FindSolutionFor(uint64_t index) {
     double80_t localRoots = 0;
 
     for (uint64_t i = 0; i < this->_equationMatrix->GetLeftSide().GetColumnsNumber(); i++) {

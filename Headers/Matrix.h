@@ -36,7 +36,7 @@ struct QualitativeNumbers {
     }
 
 private:
-    static void PrintInputMessage(const uint64_t &index) {
+    static void PrintInputMessage(uint64_t index) {
         std::cout << "Input lambda" << index << ":";
     }
 };
@@ -45,7 +45,7 @@ private:
 class Matrix {
 public:
     // ─── Constructors Section ───────────────────────────────────────────────────────
-    explicit Matrix(const uint64_t &rows, const uint64_t &columns);
+    explicit Matrix(uint64_t rows, uint64_t columns);
 
     explicit Matrix();
 

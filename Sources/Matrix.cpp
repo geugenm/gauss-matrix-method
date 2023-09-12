@@ -1,9 +1,9 @@
 #include "../Headers/Matrix.h"
 
-Matrix::Matrix(const uint64_t &rows, const uint64_t &columns) : _rows(rows), _columns(columns) {
-    this->_data.resize(rows);
+Matrix::Matrix(uint64_t rows, uint64_t columns) : _rows(rows), _columns(columns) {
+    this->_data.resize(_rows);
 
-    for (uint64_t i = 0; i < rows; i++) {
+    for (uint64_t i = 0; i < _rows; i++) {
         this->_data[i].resize(columns);
     }
 

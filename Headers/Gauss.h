@@ -15,9 +15,9 @@ public:
     // ─── Operators ──────────────────────────────────────────────────────────────────
     GaussMatrix &operator=(const GaussMatrix &source);
 
-    [[nodiscard]] std::vector<double80_t> &operator[](const uint64_t &index);
+    [[nodiscard]] std::vector<double80_t> &operator[](uint64_t index);
 
-    [[nodiscard]] std::vector<double80_t> const &operator[](const uint64_t &index) const;
+    [[nodiscard]] std::vector<double80_t> const &operator[](uint64_t index) const;
 
     // ─── Public Methods ─────────────────────────────────────────────────────────────
     [[nodiscard]] uint64_t GetRowsNumber() const;
@@ -33,13 +33,13 @@ public:
     ~GaussMatrix() = default;
 
 private:
-    void SwapRowToMaxInTheColumn(const uint64_t &currentColumn);
+    void SwapRowToMaxInTheColumn(uint64_t currentColumn);
 
-    void NullifyLowerElementsFrom(const uint64_t &currentRow);
+    void NullifyLowerElementsFrom(uint64_t currentRow);
 
-    void MakeDiagonalElementOne(const uint64_t &currentRow);
+    void MakeDiagonalElementOne(uint64_t currentRow);
 
-    void FindSolutionFor(const uint64_t &index);
+    void FindSolutionFor(uint64_t index);
 
     void StraightforwardStroke();
 
