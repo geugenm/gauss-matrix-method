@@ -26,7 +26,22 @@ TEST(MatrixTestLdl, test1) {
     }
 }
 
-int main() {
+int main(int argc, char ** argv, char ** env) {
+    std::cout << "Running main() from " << __FILE__ << std::endl;
+
+    std::cout << "Arguments: " << argc - 1 << std::endl;
+    for (int i = 0; i < argc; ++i) {
+        std::cout << " " << argv[i];
+    }
+    std::cout << std::endl;
+
+    std::cout << "Environment: " << env << std::endl;
+
     ::testing::InitGoogleTest();
+
+    std::cout << "Test result: " << testing::UnitTest::GetInstance()->Run() << std::endl;
+
+    std::cin.get();
+
     return RUN_ALL_TESTS();
 }
